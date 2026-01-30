@@ -1,244 +1,263 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Um ano com você, Lívia</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=Poppins:wght@300;400&display=swap" rel="stylesheet">
+<title>Um ano de nós</title>
 
-  <style>
-    body {
-      margin: 0;
-      font-family: 'Poppins', sans-serif;
-      background: #faf7f4;
-      color: #333;
-      scroll-behavior: smooth;
-    }
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Montserrat:wght@300;400;600&family=Italiana&display=swap" rel="stylesheet">
 
-    section {
-      padding: 60px 20px;
-      max-width: 800px;
-      margin: auto;
-      opacity: 0;
-      transform: translateY(40px);
-      transition: all 0.8s ease;
-    }
+<style>
+* {
+  box-sizing: border-box;
+}
 
-    section.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
+body {
+  margin: 0;
+  background: #000;
+  color: #fff;
+  font-family: 'Montserrat', sans-serif;
+  overflow-x: hidden;
+}
 
-    h1, h2 {
-      font-family: 'Playfair Display', serif;
-      text-align: center;
-      font-weight: 600;
-    }
+/* ===== TELA INICIAL ===== */
+#intro {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background: radial-gradient(circle at top, #111, #000);
+  transition: opacity 1s ease;
+}
 
-    p {
-      text-align: center;
-      line-height: 1.7;
-    }
+#intro h1 {
+  font-family: 'Italiana', serif;
+  font-size: 3rem;
+  letter-spacing: 2px;
+  margin-bottom: 30px;
+}
 
-    /* GALERIA */
-    .gallery {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 12px;
-    }
+#intro button {
+  padding: 14px 36px;
+  font-size: 1rem;
+  background: transparent;
+  color: #fff;
+  border: 1px solid #fff;
+  border-radius: 30px;
+  cursor: pointer;
+  transition: all 0.4s ease;
+}
 
-    .gallery img {
-      width: 100%;
-      border-radius: 15px;
-      cursor: pointer;
-      transition: transform 0.3s ease;
-    }
+#intro button:hover {
+  background: #fff;
+  color: #000;
+}
 
-    .gallery img:active {
-      transform: scale(1.08);
-    }
+/* ===== CONTEÚDO ===== */
+#content {
+  display: none;
+}
 
-    /* FOTO DO BUQUÊ */
-    .bouquet {
-      width: 80%;
-      max-width: 320px;
-      border-radius: 20px;
-      display: block;
-      margin: 30px auto;
-      animation: pulse 4s ease-in-out infinite;
-    }
+.section {
+  min-height: 100vh;
+  padding: 80px 10%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
 
-    @keyframes pulse {
-      0% { transform: scale(1); }
-      50% { transform: scale(1.04); }
-      100% { transform: scale(1); }
-    }
+.photo-block {
+  opacity: 0;
+  transform: translateY(80px);
+  transition: all 1.2s ease;
+}
 
-    /* BOTÃO DE MÚSICA */
-    .music-btn {
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
-      width: 55px;
-      height: 55px;
-      border-radius: 50%;
-      border: none;
-      background: #e6dcd2;
-      font-size: 22px;
-      cursor: pointer;
-      z-index: 10;
-    }
+.photo-block.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
 
-    /* MODAL */
-    .modal {
-      position: fixed;
-      inset: 0;
-      background: rgba(0,0,0,0.5);
-      display: none;
-      align-items: center;
-      justify-content: center;
-      z-index: 20;
-    }
+.photo-block img {
+  max-width: 100%;
+  border-radius: 20px;
+}
 
-    .modal-content {
-      background: #fff;
-      padding: 30px;
-      border-radius: 20px;
-      max-width: 300px;
-      text-align: center;
-    }
+/* VARIAÇÕES DE LAYOUT */
+.center {
+  align-items: center;
+  text-align: center;
+}
 
-    /* VÍDEO */
-    video {
-      width: 100%;
-      border-radius: 20px;
-      margin-top: 20px;
-    }
+.left {
+  align-items: flex-start;
+  text-align: left;
+}
 
-    /* MENSAGEM FINAL EVIDENTE */
-    .final-message {
-      text-align: center;
-      font-family: 'Playfair Display', serif;
-      font-size: 2.2rem;
-      font-weight: 600;
-      color: #2f2f2f;
-      padding: 80px 20px;
-      opacity: 0;
-      transform: translateY(30px);
-      transition: all 1s ease;
-    }
+.right {
+  align-items: flex-end;
+  text-align: right;
+}
 
-    .final-message.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  </style>
+/* LEGENDAS */
+.caption {
+  margin-top: 25px;
+  max-width: 600px;
+  font-size: 1.1rem;
+  line-height: 1.7;
+}
+
+.caption.romantic {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.4rem;
+}
+
+.caption.long {
+  font-size: 1rem;
+}
+
+/* BUQUÊ ANIMAÇÃO */
+.bouquet {
+  animation: float 5s ease-in-out infinite;
+}
+
+@keyframes float {
+  0% { transform: translateY(0); }
+  50% { transform: translateY(-12px); }
+  100% { transform: translateY(0); }
+}
+
+/* VÍDEO */
+video {
+  width: 100%;
+  max-width: 700px;
+  border-radius: 20px;
+  margin-top: 40px;
+}
+
+/* FINAL */
+.final {
+  font-family: 'Playfair Display', serif;
+  font-size: 2.5rem;
+  text-align: center;
+  padding: 120px 20px;
+  opacity: 0;
+  transform: translateY(50px);
+  transition: all 1.5s ease;
+}
+
+.final.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+</style>
 </head>
+
 <body>
 
-  <!-- MÚSICA -->
-  <audio id="bg-music" loop>
-    <source src="musica.mp3" type="audio/mpeg">
-  </audio>
-  <button class="music-btn" onclick="toggleMusic()">🎵</button>
+<!-- TELA INICIAL -->
+<div id="intro">
+  <h1>Um ano de nós</h1>
+  <button onclick="start()">Entrar</button>
+</div>
 
-  <!-- CAPA -->
-  <section>
-    <h1>Um ano desde que eu conheci você</h1>
-    <p>Lívia, desde aquela noite, muita coisa mudou.</p>
+<!-- CONTEÚDO -->
+<div id="content">
+
+  <!-- FOTO 1 -->
+  <section class="section center">
+    <div class="photo-block">
+      <img src="foto-nossa.jpg">
+      <div class="caption romantic">
+        Estar com você é a melhor decisão que eu poderia ter tido
+      </div>
+    </div>
   </section>
 
-  <!-- GALERIA -->
-  <section>
-    <h2>Nossos momentos</h2>
-    <div class="gallery">
-      <img src="foto-nossa.jpg">
-      <img src="foto-bochecha.jpg">
-      <img src="foto-sendo-fofa.jpg" onclick="showMessage()">
+  <!-- FOTO 2 -->
+  <section class="section left">
+    <div class="photo-block">
+      <img src="foto-sendo-fofa.jpg">
+      <div class="caption">
+        muito obrigado por ser tão carinhosa
+      </div>
+    </div>
+  </section>
+
+  <!-- FOTO 3 -->
+  <section class="section right">
+    <div class="photo-block">
       <img src="foto-olhar.jpg">
+      <div class="caption">
+        sou completamente apaixonado por seus olhos e pela forma que olha pra mim
+      </div>
     </div>
   </section>
 
   <!-- BUQUÊ -->
-  <section>
-    <h2>Minha flor favorita</h2>
-    <img src="foto-buque.jpg" class="bouquet">
-  </section>
-
-  <!-- TEXTO -->
-  <section>
-    <p>
-      Você foi a minha melhor escolha.<br>
-      E é com você que eu escolho o futuro.
-    </p>
+  <section class="section center">
+    <div class="photo-block">
+      <img src="foto-buque.jpg" class="bouquet">
+    </div>
   </section>
 
   <!-- VÍDEO -->
-  <section>
-    <h2>Um pouco de nós</h2>
-    <video id="finalVideo" muted playsinline>
-      <source src="video-final.mp4" type="video/mp4">
-    </video>
-  </section>
-
-  <!-- MENSAGEM FINAL -->
-  <section class="final-message">
-    compartilhar a vida com você é bom demais
-  </section>
-
-  <!-- MODAL -->
-  <div class="modal" id="modal">
-    <div class="modal-content">
-      <p>
-        Se você chegou até aqui,<br>
-        é porque esse amor também escolheu ficar.
-      </p>
-      <button onclick="closeMessage()">💛</button>
+  <section class="section center">
+    <div class="photo-block">
+      <video muted playsinline preload="metadata">
+        <source src="video-final.mp4" type="video/mp4">
+      </video>
+      <div class="caption">
+        amo cada momento junto com você
+      </div>
     </div>
+  </section>
+
+  <!-- FOTO FINAL -->
+  <section class="section left">
+    <div class="photo-block">
+      <img src="foto-bochecha.jpg" style="max-width: 350px;">
+      <div class="caption long">
+        A vida ao seu lado é mais leve e divertida, você é meu lugar favorito no mundo, a minha pessoa preferida.
+        Se existirem mais vidas depois dessa eu te escolheria todas as vezes.
+        você é a minha maior certeza.
+        Esse é só o primeiro de muitos anos que ainda quero viver ao seu lado, juntinhos,
+        você, nossos filhos, o Bento e eu.
+        Você é o resultado das minhas orações mais lindas.
+        Muito obrigado por tudo meu amor, <strong>EU TE AMO.</strong>
+      </div>
+    </div>
+  </section>
+
+  <!-- FINAL -->
+  <div class="final">
+    compartilhar a vida com você é bom demais
   </div>
 
-  <script>
-    // animação ao rolar
-    const sections = document.querySelectorAll("section, .final-message");
-    const observer = new IntersectionObserver(entries => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add("visible");
-        }
-      });
-    }, { threshold: 0.15 });
+</div>
 
-    sections.forEach(el => observer.observe(el));
+<script>
+function start() {
+  document.getElementById("intro").style.opacity = 0;
+  setTimeout(() => {
+    document.getElementById("intro").style.display = "none";
+    document.getElementById("content").style.display = "block";
+  }, 1000);
+}
 
-    // música
-    const music = document.getElementById("bg-music");
-    let playing = false;
-    function toggleMusic() {
-      playing ? music.pause() : music.play();
-      playing = !playing;
+const blocks = document.querySelectorAll(".photo-block, .final");
+
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add("visible");
     }
+  });
+}, { threshold: 0.2 });
 
-    // mensagem secreta
-    function showMessage() {
-      document.getElementById("modal").style.display = "flex";
-    }
-    function closeMessage() {
-      document.getElementById("modal").style.display = "none";
-    }
-
-    // vídeo autoplay quando aparecer
-    const video = document.getElementById("finalVideo");
-    const videoObserver = new IntersectionObserver(entries => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) video.play();
-        else video.pause();
-      });
-    }, { threshold: 0.5 });
-
-    videoObserver.observe(video);
-  </script>
+blocks.forEach(el => observer.observe(el));
+</script>
 
 </body>
 </html>
-

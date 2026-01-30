@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Um ano de nós</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;1,500&family=Montserrat:wght@300;400;600&family=Italiana&family=Cormorant+Garamond:ital,wght@0,400;1,500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Italiana&family=Montserrat:wght@300;400;600&family=Playfair+Display:wght@500;700&family=Cormorant+Garamond:ital,wght@0,400;1,500&display=swap" rel="stylesheet">
 
 <style>
 * { box-sizing: border-box; }
@@ -18,18 +18,29 @@ body {
   overflow-x: hidden;
 }
 
-/* ===== INTRO ===== */
+/* TELAS FIXAS */
 .screen {
-  height: 100vh;
+  position: fixed;
+  inset: 0;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   text-align: center;
   padding: 20px;
+  background: #000;
+  opacity: 0;
+  pointer-events: none;
   transition: opacity 1s ease;
+  z-index: 10;
 }
 
+.screen.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* INTRO */
 #intro h1 {
   font-family: 'Italiana', serif;
   font-size: 3rem;
@@ -37,7 +48,7 @@ body {
 }
 
 button {
-  margin-top: 40px;
+  margin-top: 30px;
   padding: 14px 38px;
   border-radius: 40px;
   border: 1px solid #fff;
@@ -53,15 +64,14 @@ button:hover {
   color: #000;
 }
 
-/* ===== SPOTIFY SCREEN ===== */
+/* TELA DA MÚSICA */
 #musicScreen {
-  display: none;
   background: linear-gradient(180deg, #1a1a1a, #000);
 }
 
 .spotify-card {
   background: #121212;
-  border-radius: 20px;
+  border-radius: 22px;
   padding: 30px;
   width: 90%;
   max-width: 320px;
@@ -70,13 +80,13 @@ button:hover {
 
 .spotify-card img {
   width: 100%;
-  border-radius: 12px;
-  margin-bottom: 20px;
+  border-radius: 14px;
+  margin-bottom: 18px;
 }
 
 .spotify-card h2 {
-  font-size: 1.1rem;
   margin: 0;
+  font-size: 1.1rem;
 }
 
 .spotify-card p {
@@ -84,20 +94,45 @@ button:hover {
   color: #aaa;
 }
 
+/* PLAY */
 .play-btn {
-  margin-top: 25px;
-  width: 60px;
-  height: 60px;
+  margin-top: 20px;
+  width: 64px;
+  height: 64px;
   border-radius: 50%;
   background: #1db954;
   color: #000;
   border: none;
-  font-size: 1.5rem;
+  font-size: 1.6rem;
+  cursor: pointer;
 }
 
-/* ===== CONTEÚDO ===== */
+/* VOLUME */
+.volume-control {
+  margin-top: 22px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.volume-control span {
+  font-size: 0.7rem;
+  color: #aaa;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.volume-control input[type=range] {
+  width: 100%;
+  accent-color: #1db954;
+}
+
+/* CONTEÚDO */
 #content {
   display: none;
+  position: relative;
+  z-index: 1;
 }
 
 .section {
@@ -125,14 +160,14 @@ button:hover {
 }
 
 /* POSIÇÕES */
-.center { text-align: center; align-items: center; }
-.left { text-align: left; align-items: flex-start; }
-.right { text-align: right; align-items: flex-end; }
+.center { align-items: center; text-align: center; }
+.left { align-items: flex-start; text-align: left; }
+.right { align-items: flex-end; text-align: right; }
 
 /* LEGENDAS */
 .caption {
-  margin-top: 25px;
-  max-width: 620px;
+  margin-top: 24px;
+  max-width: 640px;
   font-family: 'Cormorant Garamond', serif;
   font-size: 1.5rem;
   font-style: italic;
@@ -183,7 +218,7 @@ video {
 </audio>
 
 <!-- INTRO -->
-<div id="intro" class="screen">
+<div id="intro" class="screen active">
   <h1>Um ano de nós</h1>
   <button onclick="goMusic()">Começar</button>
 </div>
@@ -196,7 +231,13 @@ video {
     <img src="foto-nossa.jpg">
     <h2>Nosso momento</h2>
     <p>para viver essa história</p>
+
     <button class="play-btn" onclick="startExperience()">▶</button>
+
+    <div class="volume-control">
+      <input type="range" min="0" max="1" step="0.01" value="0.6" onchange="setVolume(this.value)">
+      <span>volume</span>
+    </div>
   </div>
 </div>
 
@@ -256,10 +297,63 @@ video {
     <div class="photo-block">
       <img src="foto-bochecha.jpg" style="max-width: 350px;">
       <div class="caption">
-        A vida ao seu lado é mais leve e divertida…<br><br>
-        você é a minha pessoa preferida, a minha maior certeza.
+        A vida ao seu lado é mais leve e divertida, você é meu lugar favorito no mundo,
+        a minha pessoa preferida. Se existirem mais vidas depois dessa eu te escolheria
+        todas as vezes. você é a minha maior certeza.
+        <br><br>
         Esse é só o primeiro de muitos anos que ainda quero viver ao seu lado,
         juntinhos, você, nossos filhos, o Bento e eu.
         <br><br>
         Muito obrigado por tudo meu amor.<br>
-        <strong>EU TE AMO.<
+        <strong>EU TE AMO.</strong>
+      </div>
+    </div>
+  </section>
+
+  <div class="final">
+    compartilhar a vida com você é bom demais
+  </div>
+
+</div>
+
+<script>
+const intro = document.getElementById("intro");
+const musicScreen = document.getElementById("musicScreen");
+const content = document.getElementById("content");
+const music = document.getElementById("music");
+
+music.volume = 0.6;
+
+function setVolume(value) {
+  music.volume = value;
+}
+
+function goMusic() {
+  intro.classList.remove("active");
+  setTimeout(() => {
+    musicScreen.classList.add("active");
+  }, 600);
+}
+
+function startExperience() {
+  music.play().catch(()=>{});
+  musicScreen.classList.remove("active");
+  setTimeout(() => {
+    content.style.display = "block";
+  }, 600);
+}
+
+const blocks = document.querySelectorAll(".photo-block, .final");
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add("visible");
+    }
+  });
+}, { threshold: 0.25 });
+
+blocks.forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>

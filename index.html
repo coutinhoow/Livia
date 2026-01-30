@@ -91,6 +91,25 @@ video {
   border-radius: 22px;
 }
 
+/* VIDEO IPHONE */
+.video-wrapper {
+  position: relative;
+}
+
+.video-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.45);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: 'Playfair Display', serif;
+  font-size: 1.4rem;
+  cursor: pointer;
+  border-radius: 22px;
+  z-index: 2;
+}
+
 .caption {
   margin-top: 22px;
   font-family: 'Cormorant Garamond', serif;
@@ -160,9 +179,11 @@ video {
     </div>
   </section>
 
+  <!-- VIDEO -->
   <section class="section">
-    <div class="photo-block">
-      <video muted playsinline preload="auto">
+    <div class="photo-block video-wrapper">
+      <div class="video-overlay" onclick="playVideo(this)">▶ tocar vídeo</div>
+      <video muted playsinline preload="metadata">
         <source src="video-final.mp4" type="video/mp4">
       </video>
       <div class="caption">amo cada momento junto com você</div>
@@ -217,12 +238,16 @@ function toggleMusic() {
   }
 }
 
+function playVideo(el) {
+  const video = el.parentElement.querySelector("video");
+  el.style.display = "none";
+  video.play();
+}
+
 const observer = new IntersectionObserver(entries => {
   entries.forEach(entry => {
     if (entry.isIntersecting) {
       entry.target.classList.add("visible");
-      const video = entry.target.querySelector("video");
-      if (video) video.play();
     }
   });
 }, { threshold: 0.4 });

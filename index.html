@@ -84,19 +84,8 @@ button:hover {
   margin-bottom: 18px;
 }
 
-.spotify-card h2 {
-  margin: 0;
-  font-size: 1.1rem;
-}
-
-.spotify-card p {
-  font-size: 0.9rem;
-  color: #aaa;
-}
-
-/* PLAY */
 .play-btn {
-  margin-top: 20px;
+  margin-top: 18px;
   width: 64px;
   height: 64px;
   border-radius: 50%;
@@ -107,23 +96,11 @@ button:hover {
   cursor: pointer;
 }
 
-/* VOLUME */
 .volume-control {
-  margin-top: 22px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 8px;
+  margin-top: 18px;
 }
 
-.volume-control span {
-  font-size: 0.7rem;
-  color: #aaa;
-  letter-spacing: 1px;
-  text-transform: uppercase;
-}
-
-.volume-control input[type=range] {
+.volume-control input {
   width: 100%;
   accent-color: #1db954;
 }
@@ -131,8 +108,6 @@ button:hover {
 /* CONTEÚDO */
 #content {
   display: none;
-  position: relative;
-  z-index: 1;
 }
 
 .section {
@@ -159,12 +134,10 @@ button:hover {
   border-radius: 20px;
 }
 
-/* POSIÇÕES */
 .center { align-items: center; text-align: center; }
 .left { align-items: flex-start; text-align: left; }
 .right { align-items: flex-end; text-align: right; }
 
-/* LEGENDAS */
 .caption {
   margin-top: 24px;
   max-width: 640px;
@@ -220,7 +193,7 @@ video {
 <!-- INTRO -->
 <div id="intro" class="screen active">
   <h1>Um ano de nós</h1>
-  <button onclick="goMusic()">Começar</button>
+  <button type="button" onclick="goMusic()">Começar</button>
 </div>
 
 <!-- MÚSICA -->
@@ -229,14 +202,9 @@ video {
 
   <div class="spotify-card">
     <img src="foto-nossa.jpg">
-    <h2>Nosso momento</h2>
-    <p>para viver essa história</p>
-
-    <button class="play-btn" onclick="startExperience()">▶</button>
-
+    <button type="button" class="play-btn" onclick="startExperience()">▶</button>
     <div class="volume-control">
       <input type="range" min="0" max="1" step="0.01" value="0.6" onchange="setVolume(this.value)">
-      <span>volume</span>
     </div>
   </div>
 </div>
@@ -247,27 +215,21 @@ video {
   <section class="section center">
     <div class="photo-block">
       <img src="foto-nossa.jpg">
-      <div class="caption">
-        Estar com você é a melhor decisão que eu poderia ter tido
-      </div>
+      <div class="caption">Estar com você é a melhor decisão que eu poderia ter tido</div>
     </div>
   </section>
 
   <section class="section left">
     <div class="photo-block">
       <img src="foto-sendo-fofa.jpg">
-      <div class="caption">
-        muito obrigado por ser tão carinhosa
-      </div>
+      <div class="caption">muito obrigado por ser tão carinhosa</div>
     </div>
   </section>
 
   <section class="section right">
     <div class="photo-block">
       <img src="foto-olhar.jpg">
-      <div class="caption">
-        sou completamente apaixonado por seus olhos e pela forma que olha pra mim
-      </div>
+      <div class="caption">sou completamente apaixonado por seus olhos e pela forma que olha pra mim</div>
     </div>
   </section>
 
@@ -284,35 +246,28 @@ video {
 
   <section class="section center">
     <div class="photo-block">
-      <video muted playsinline preload="metadata">
+      <video muted playsinline preload="auto">
         <source src="video-final.mp4" type="video/mp4">
       </video>
-      <div class="caption">
-        amo cada momento junto com você
-      </div>
+      <div class="caption">amo cada momento junto com você</div>
     </div>
   </section>
 
   <section class="section left">
     <div class="photo-block">
-      <img src="foto-bochecha.jpg" style="max-width: 350px;">
+      <img src="foto-bochecha.jpg" style="max-width:350px;">
       <div class="caption">
         A vida ao seu lado é mais leve e divertida, você é meu lugar favorito no mundo,
         a minha pessoa preferida. Se existirem mais vidas depois dessa eu te escolheria
-        todas as vezes. você é a minha maior certeza.
-        <br><br>
+        todas as vezes. você é a minha maior certeza.<br><br>
         Esse é só o primeiro de muitos anos que ainda quero viver ao seu lado,
-        juntinhos, você, nossos filhos, o Bento e eu.
-        <br><br>
-        Muito obrigado por tudo meu amor.<br>
+        juntinhos, você, nossos filhos, o Bento e eu.<br><br>
         <strong>EU TE AMO.</strong>
       </div>
     </div>
   </section>
 
-  <div class="final">
-    compartilhar a vida com você é bom demais
-  </div>
+  <div class="final">compartilhar a vida com você é bom demais</div>
 
 </div>
 
@@ -324,35 +279,35 @@ const music = document.getElementById("music");
 
 music.volume = 0.6;
 
-function setVolume(value) {
-  music.volume = value;
+function setVolume(v) {
+  music.volume = v;
 }
 
 function goMusic() {
   intro.classList.remove("active");
-  setTimeout(() => {
-    musicScreen.classList.add("active");
-  }, 600);
+  setTimeout(() => musicScreen.classList.add("active"), 500);
 }
 
 function startExperience() {
-  music.play().catch(()=>{});
+  music.play();
   musicScreen.classList.remove("active");
-  setTimeout(() => {
-    content.style.display = "block";
-  }, 600);
+  setTimeout(() => content.style.display = "block", 500);
 }
 
-const blocks = document.querySelectorAll(".photo-block, .final");
+/* animações + vídeo */
 const observer = new IntersectionObserver(entries => {
   entries.forEach(entry => {
     if (entry.isIntersecting) {
       entry.target.classList.add("visible");
+      if (entry.target.tagName === "VIDEO") {
+        entry.target.play();
+      }
     }
   });
-}, { threshold: 0.25 });
+}, { threshold: 0.4 });
 
-blocks.forEach(el => observer.observe(el));
+document.querySelectorAll(".photo-block, .final").forEach(el => observer.observe(el));
+document.querySelectorAll("video").forEach(v => observer.observe(v));
 </script>
 
 </body>

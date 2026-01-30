@@ -18,21 +18,18 @@ body {
 .screen {
   position: fixed;
   inset: 0;
+  background: #000;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background: #000;
   text-align: center;
   z-index: 10;
 }
 
-.hidden {
-  display: none;
-}
+.hidden { display: none; }
 
 button {
-  margin-top: 30px;
   padding: 14px 38px;
   border-radius: 40px;
   border: 1px solid #fff;
@@ -42,23 +39,29 @@ button {
   font-size: 1rem;
 }
 
-.spotify-card {
-  background: #121212;
-  padding: 30px;
+.music-screen img {
+  width: 280px;
   border-radius: 20px;
-  width: 300px;
+  margin: 25px 0;
 }
 
-.play-btn {
-  width: 64px;
-  height: 64px;
+/* PAUSE GLOBAL */
+#pauseBtn {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: rgba(255,255,255,0.1);
+  border: 1px solid rgba(255,255,255,0.3);
+  color: #fff;
+  padding: 10px 14px;
   border-radius: 50%;
-  background: #1db954;
-  border: none;
-  font-size: 1.6rem;
-  margin-top: 20px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  z-index: 5;
+  display: none;
 }
 
+/* CONTEÚDO */
 .section {
   min-height: 100vh;
   padding: 80px 10%;
@@ -103,8 +106,7 @@ img, video {
 
 <body>
 
-<!-- ÁUDIO -->
-<audio id="music" src="musica.mp3"></audio>
+<audio id="music" src="musica.mp3" loop></audio>
 
 <!-- INTRO -->
 <div id="intro" class="screen">
@@ -113,15 +115,14 @@ img, video {
 </div>
 
 <!-- TELA MÚSICA -->
-<div id="musicScreen" class="screen hidden">
-  <p>Antes de começar…<br>vamos colocar uma música?</p>
-
-  <div class="spotify-card">
-    <button type="button" class="play-btn" onclick="startExperience()">▶</button>
-    <input type="range" min="0" max="1" step="0.01" value="0.6"
-      onchange="music.volume=this.value">
-  </div>
+<div id="musicScreen" class="screen music-screen hidden">
+  <p style="font-size:1.2rem;">vamos por uma música antes de começar</p>
+  <img src="foto-musica.jpg">
+  <button type="button" onclick="startExperience()">▶ tocar e continuar</button>
 </div>
+
+<!-- PAUSE -->
+<button id="pauseBtn" onclick="toggleMusic()">⏸</button>
 
 <!-- CONTEÚDO -->
 <div id="content" class="hidden">
@@ -129,27 +130,21 @@ img, video {
   <section class="section">
     <div class="photo-block">
       <img src="foto-nossa.jpg">
-      <div class="caption">
-        Estar com você é a melhor decisão que eu poderia ter tido
-      </div>
+      <div class="caption">Estar com você é a melhor decisão que eu poderia ter tido</div>
     </div>
   </section>
 
   <section class="section">
     <div class="photo-block">
       <img src="foto-sendo-fofa.jpg">
-      <div class="caption">
-        muito obrigado por ser tão carinhosa
-      </div>
+      <div class="caption">muito obrigado por ser tão carinhosa</div>
     </div>
   </section>
 
   <section class="section">
     <div class="photo-block">
       <img src="foto-olhar.jpg">
-      <div class="caption">
-        sou completamente apaixonado por seus olhos e pela forma que olha pra mim
-      </div>
+      <div class="caption">sou completamente apaixonado por seus olhos e pela forma que olha pra mim</div>
     </div>
   </section>
 
@@ -165,12 +160,10 @@ img, video {
 
   <section class="section">
     <div class="photo-block">
-      <video id="video" muted playsinline controls>
+      <video muted playsinline preload="auto">
         <source src="video-final.mp4" type="video/mp4">
       </video>
-      <div class="caption">
-        amo cada momento junto com você
-      </div>
+      <div class="caption">amo cada momento junto com você</div>
     </div>
   </section>
 
@@ -181,19 +174,12 @@ img, video {
         A vida ao seu lado é mais leve e divertida, você é meu lugar favorito no mundo,
         a minha pessoa preferida. Se existirem mais vidas depois dessa eu te escolheria
         todas as vezes. você é a minha maior certeza.
-        <br><br>
-        Esse é só o primeiro de muitos anos que ainda quero viver ao seu lado,
-        juntinhos, você, nossos filhos, o Bento e eu.
-        <br><br>
-        <strong>EU TE AMO.</strong>
+        <br><br><strong>EU TE AMO.</strong>
       </div>
     </div>
   </section>
 
-  <div class="final">
-    compartilhar a vida com você é bom demais
-  </div>
-
+  <div class="final">compartilhar a vida com você é bom demais</div>
 </div>
 
 <script>
@@ -201,7 +187,7 @@ const intro = document.getElementById("intro");
 const musicScreen = document.getElementById("musicScreen");
 const content = document.getElementById("content");
 const music = document.getElementById("music");
-const video = document.getElementById("video");
+const pauseBtn = document.getElementById("pauseBtn");
 
 function goMusic() {
   intro.classList.add("hidden");
@@ -210,20 +196,29 @@ function goMusic() {
 
 function startExperience() {
   music.volume = 0.6;
-  music.play(); // gesto direto → FUNCIONA EM TODOS
+  music.play(); // gesto REAL → música desbloqueada
   musicScreen.classList.add("hidden");
   content.classList.remove("hidden");
+  pauseBtn.style.display = "block";
 }
 
+function toggleMusic() {
+  if (music.paused) {
+    music.play();
+    pauseBtn.textContent = "⏸";
+  } else {
+    music.pause();
+    pauseBtn.textContent = "▶";
+  }
+}
+
+/* animações + vídeo */
 const observer = new IntersectionObserver(entries => {
   entries.forEach(entry => {
     if (entry.isIntersecting) {
       entry.target.classList.add("visible");
-
       const vid = entry.target.querySelector("video");
-      if (vid) {
-        vid.play();
-      }
+      if (vid) vid.play();
     }
   });
 }, { threshold: 0.4 });

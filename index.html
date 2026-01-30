@@ -45,12 +45,11 @@ button {
   margin: 25px 0;
 }
 
-/* PAUSE GLOBAL */
 #pauseBtn {
   position: fixed;
   bottom: 20px;
   right: 20px;
-  background: rgba(255,255,255,0.1);
+  background: rgba(255,255,255,0.12);
   border: 1px solid rgba(255,255,255,0.3);
   color: #fff;
   padding: 10px 14px;
@@ -61,20 +60,19 @@ button {
   display: none;
 }
 
-/* CONTEÚDO */
 .section {
   min-height: 100vh;
   padding: 80px 10%;
   display: flex;
-  flex-direction: column;
   justify-content: center;
   align-items: center;
 }
 
 .photo-block {
+  max-width: 720px;
   opacity: 0;
-  transform: translateY(50px);
-  transition: all 1s ease;
+  transform: translateY(60px);
+  transition: all 1.1s ease;
 }
 
 .photo-block.visible {
@@ -82,17 +80,23 @@ button {
   transform: translateY(0);
 }
 
-img, video {
-  max-width: 100%;
-  border-radius: 20px;
+img {
+  width: 100%;
+  border-radius: 22px;
+}
+
+video {
+  width: 100%;
+  display: block;
+  border-radius: 22px;
 }
 
 .caption {
-  margin-top: 20px;
+  margin-top: 22px;
   font-family: 'Cormorant Garamond', serif;
   font-size: 1.5rem;
+  line-height: 1.4;
   text-align: center;
-  max-width: 650px;
 }
 
 .final {
@@ -111,20 +115,18 @@ img, video {
 <!-- INTRO -->
 <div id="intro" class="screen">
   <h1 style="font-family:Italiana;font-size:3rem;">Um ano de nós</h1>
-  <button type="button" onclick="goMusic()">Começar</button>
+  <button onclick="goMusic()">Começar</button>
 </div>
 
 <!-- TELA MÚSICA -->
 <div id="musicScreen" class="screen music-screen hidden">
   <p style="font-size:1.2rem;">vamos por uma música antes de começar</p>
   <img src="foto-musica.jpg">
-  <button type="button" onclick="startExperience()">▶ tocar e continuar</button>
+  <button onclick="startExperience()">▶ tocar e continuar</button>
 </div>
 
-<!-- PAUSE -->
 <button id="pauseBtn" onclick="toggleMusic()">⏸</button>
 
-<!-- CONTEÚDO -->
 <div id="content" class="hidden">
 
   <section class="section">
@@ -174,7 +176,10 @@ img, video {
         A vida ao seu lado é mais leve e divertida, você é meu lugar favorito no mundo,
         a minha pessoa preferida. Se existirem mais vidas depois dessa eu te escolheria
         todas as vezes. você é a minha maior certeza.
-        <br><br><strong>EU TE AMO.</strong>
+        <br><br>
+        Esse é só o primeiro de muitos anos que ainda quero viver ao seu lado, juntinhos,
+        você, nossos filhos, o Bento e eu. Você é o resultado das minhas orações mais lindas.
+        Muito obrigado por tudo meu amor, <strong>EU TE AMO.</strong>
       </div>
     </div>
   </section>
@@ -196,7 +201,7 @@ function goMusic() {
 
 function startExperience() {
   music.volume = 0.6;
-  music.play(); // gesto REAL → música desbloqueada
+  music.play();
   musicScreen.classList.add("hidden");
   content.classList.remove("hidden");
   pauseBtn.style.display = "block";
@@ -212,13 +217,12 @@ function toggleMusic() {
   }
 }
 
-/* animações + vídeo */
 const observer = new IntersectionObserver(entries => {
   entries.forEach(entry => {
     if (entry.isIntersecting) {
       entry.target.classList.add("visible");
-      const vid = entry.target.querySelector("video");
-      if (vid) vid.play();
+      const video = entry.target.querySelector("video");
+      if (video) video.play();
     }
   });
 }, { threshold: 0.4 });

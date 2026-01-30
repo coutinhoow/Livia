@@ -3,15 +3,12 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>Um ano de nós</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Montserrat:wght@300;400;600&family=Italiana&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;1,500&family=Montserrat:wght@300;400;600&family=Italiana&family=Cormorant+Garamond:ital,wght@0,400;1,500&display=swap" rel="stylesheet">
 
 <style>
-* {
-  box-sizing: border-box;
-}
+* { box-sizing: border-box; }
 
 body {
   margin: 0;
@@ -21,38 +18,81 @@ body {
   overflow-x: hidden;
 }
 
-/* ===== TELA INICIAL ===== */
-#intro {
+/* ===== INTRO ===== */
+.screen {
   height: 100vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background: radial-gradient(circle at top, #111, #000);
+  text-align: center;
+  padding: 20px;
   transition: opacity 1s ease;
 }
 
 #intro h1 {
   font-family: 'Italiana', serif;
   font-size: 3rem;
-  letter-spacing: 2px;
-  margin-bottom: 30px;
+  letter-spacing: 3px;
 }
 
-#intro button {
-  padding: 14px 36px;
-  font-size: 1rem;
+button {
+  margin-top: 40px;
+  padding: 14px 38px;
+  border-radius: 40px;
+  border: 1px solid #fff;
   background: transparent;
   color: #fff;
-  border: 1px solid #fff;
-  border-radius: 30px;
+  font-size: 1rem;
   cursor: pointer;
   transition: all 0.4s ease;
 }
 
-#intro button:hover {
+button:hover {
   background: #fff;
   color: #000;
+}
+
+/* ===== SPOTIFY SCREEN ===== */
+#musicScreen {
+  display: none;
+  background: linear-gradient(180deg, #1a1a1a, #000);
+}
+
+.spotify-card {
+  background: #121212;
+  border-radius: 20px;
+  padding: 30px;
+  width: 90%;
+  max-width: 320px;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.6);
+}
+
+.spotify-card img {
+  width: 100%;
+  border-radius: 12px;
+  margin-bottom: 20px;
+}
+
+.spotify-card h2 {
+  font-size: 1.1rem;
+  margin: 0;
+}
+
+.spotify-card p {
+  font-size: 0.9rem;
+  color: #aaa;
+}
+
+.play-btn {
+  margin-top: 25px;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: #1db954;
+  color: #000;
+  border: none;
+  font-size: 1.5rem;
 }
 
 /* ===== CONTEÚDO ===== */
@@ -84,47 +124,29 @@ body {
   border-radius: 20px;
 }
 
-/* VARIAÇÕES DE LAYOUT */
-.center {
-  align-items: center;
-  text-align: center;
-}
-
-.left {
-  align-items: flex-start;
-  text-align: left;
-}
-
-.right {
-  align-items: flex-end;
-  text-align: right;
-}
+/* POSIÇÕES */
+.center { text-align: center; align-items: center; }
+.left { text-align: left; align-items: flex-start; }
+.right { text-align: right; align-items: flex-end; }
 
 /* LEGENDAS */
 .caption {
   margin-top: 25px;
-  max-width: 600px;
-  font-size: 1.1rem;
-  line-height: 1.7;
+  max-width: 620px;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.5rem;
+  font-style: italic;
+  line-height: 1.6;
 }
 
-.caption.romantic {
-  font-family: 'Playfair Display', serif;
-  font-size: 1.4rem;
-}
-
-.caption.long {
-  font-size: 1rem;
-}
-
-/* BUQUÊ ANIMAÇÃO */
+/* BUQUÊ */
 .bouquet {
-  animation: float 5s ease-in-out infinite;
+  animation: float 6s ease-in-out infinite;
 }
 
 @keyframes float {
   0% { transform: translateY(0); }
-  50% { transform: translateY(-12px); }
+  50% { transform: translateY(-14px); }
   100% { transform: translateY(0); }
 }
 
@@ -139,7 +161,7 @@ video {
 /* FINAL */
 .final {
   font-family: 'Playfair Display', serif;
-  font-size: 2.5rem;
+  font-size: 2.6rem;
   text-align: center;
   padding: 120px 20px;
   opacity: 0;
@@ -156,26 +178,40 @@ video {
 
 <body>
 
-<!-- TELA INICIAL -->
-<div id="intro">
+<audio id="music" loop>
+  <source src="musica.mp3" type="audio/mpeg">
+</audio>
+
+<!-- INTRO -->
+<div id="intro" class="screen">
   <h1>Um ano de nós</h1>
-  <button onclick="start()">Entrar</button>
+  <button onclick="goMusic()">Começar</button>
+</div>
+
+<!-- MÚSICA -->
+<div id="musicScreen" class="screen">
+  <p>Antes de começar…<br>vamos colocar uma música?</p>
+
+  <div class="spotify-card">
+    <img src="foto-nossa.jpg">
+    <h2>Nosso momento</h2>
+    <p>para viver essa história</p>
+    <button class="play-btn" onclick="startExperience()">▶</button>
+  </div>
 </div>
 
 <!-- CONTEÚDO -->
 <div id="content">
 
-  <!-- FOTO 1 -->
   <section class="section center">
     <div class="photo-block">
       <img src="foto-nossa.jpg">
-      <div class="caption romantic">
+      <div class="caption">
         Estar com você é a melhor decisão que eu poderia ter tido
       </div>
     </div>
   </section>
 
-  <!-- FOTO 2 -->
   <section class="section left">
     <div class="photo-block">
       <img src="foto-sendo-fofa.jpg">
@@ -185,7 +221,6 @@ video {
     </div>
   </section>
 
-  <!-- FOTO 3 -->
   <section class="section right">
     <div class="photo-block">
       <img src="foto-olhar.jpg">
@@ -195,14 +230,17 @@ video {
     </div>
   </section>
 
-  <!-- BUQUÊ -->
   <section class="section center">
     <div class="photo-block">
       <img src="foto-buque.jpg" class="bouquet">
+      <div class="caption">
+        Entre todas as flores do mundo, você é como uma tulipa:
+        rara, delicada e forte. Não precisa de exagero para ser linda,
+        você simplesmente é.
+      </div>
     </div>
   </section>
 
-  <!-- VÍDEO -->
   <section class="section center">
     <div class="photo-block">
       <video muted playsinline preload="metadata">
@@ -214,50 +252,14 @@ video {
     </div>
   </section>
 
-  <!-- FOTO FINAL -->
   <section class="section left">
     <div class="photo-block">
       <img src="foto-bochecha.jpg" style="max-width: 350px;">
-      <div class="caption long">
-        A vida ao seu lado é mais leve e divertida, você é meu lugar favorito no mundo, a minha pessoa preferida.
-        Se existirem mais vidas depois dessa eu te escolheria todas as vezes.
-        você é a minha maior certeza.
-        Esse é só o primeiro de muitos anos que ainda quero viver ao seu lado, juntinhos,
-        você, nossos filhos, o Bento e eu.
-        Você é o resultado das minhas orações mais lindas.
-        Muito obrigado por tudo meu amor, <strong>EU TE AMO.</strong>
-      </div>
-    </div>
-  </section>
-
-  <!-- FINAL -->
-  <div class="final">
-    compartilhar a vida com você é bom demais
-  </div>
-
-</div>
-
-<script>
-function start() {
-  document.getElementById("intro").style.opacity = 0;
-  setTimeout(() => {
-    document.getElementById("intro").style.display = "none";
-    document.getElementById("content").style.display = "block";
-  }, 1000);
-}
-
-const blocks = document.querySelectorAll(".photo-block, .final");
-
-const observer = new IntersectionObserver(entries => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      entry.target.classList.add("visible");
-    }
-  });
-}, { threshold: 0.2 });
-
-blocks.forEach(el => observer.observe(el));
-</script>
-
-</body>
-</html>
+      <div class="caption">
+        A vida ao seu lado é mais leve e divertida…<br><br>
+        você é a minha pessoa preferida, a minha maior certeza.
+        Esse é só o primeiro de muitos anos que ainda quero viver ao seu lado,
+        juntinhos, você, nossos filhos, o Bento e eu.
+        <br><br>
+        Muito obrigado por tudo meu amor.<br>
+        <strong>EU TE AMO.<

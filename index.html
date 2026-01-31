@@ -8,173 +8,127 @@
 <link href="https://fonts.googleapis.com/css2?family=Italiana&family=Montserrat:wght@300;400;600&family=Playfair+Display:wght@500;700&family=Cormorant+Garamond:ital,wght@0,400;1,500&display=swap" rel="stylesheet">
 
 <style>
-* { box-sizing: border-box; }
+*{box-sizing:border-box}
+body{
+  margin:0;
+  background:#000;
+  color:#fff;
+  font-family:'Montserrat',sans-serif;
+  overflow-x:hidden;
+}
+#particles{position:fixed;inset:0;z-index:-1}
 
-body {
-  margin: 0;
-  background: #000;
-  color: #fff;
-  font-family: 'Montserrat', sans-serif;
-  overflow-x: hidden;
+.screen{
+  position:fixed;inset:0;
+  background:#000;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  text-align:center;
+  z-index:10;
+}
+.hidden{display:none}
+
+button{
+  padding:14px 38px;
+  border-radius:40px;
+  border:1px solid #fff;
+  background:transparent;
+  color:#fff;
+  cursor:pointer;
+  font-size:1rem;
 }
 
-/* FUNDO */
-#particles {
-  position: fixed;
-  inset: 0;
-  z-index: -1;
+.typewriter{
+  font-family:'Cormorant Garamond',serif;
+  font-size:1.8rem;
+  max-width:720px;
+  line-height:1.4;
+  margin-bottom:40px;
 }
 
-/* TELAS */
-.screen {
-  position: fixed;
-  inset: 0;
-  background: #000;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  z-index: 10;
+#pauseBtn{
+  position:fixed;
+  bottom:20px;right:20px;
+  background:rgba(255,255,255,0.12);
+  border:1px solid rgba(255,255,255,0.3);
+  padding:10px 14px;
+  border-radius:50%;
+  cursor:pointer;
+  z-index:5;
+  display:none;
 }
 
-.hidden { display: none; }
-
-button {
-  padding: 14px 38px;
-  border-radius: 40px;
-  border: 1px solid #fff;
-  background: transparent;
-  color: #fff;
-  cursor: pointer;
-  font-size: 1rem;
+.section{
+  min-height:100vh;
+  padding:90px 8%;
+  display:flex;
+  justify-content:center;
+  align-items:center;
 }
 
-/* TEXTO DIGITADO */
-.typewriter {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 1.8rem;
-  max-width: 720px;
-  line-height: 1.4;
-  margin-bottom: 40px;
+.photo-block{
+  max-width:720px;
+  opacity:0;
+  transform:translateY(80px);
+  transition:all 1.2s ease;
 }
-
-/* PAUSE */
-#pauseBtn {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  background: rgba(255,255,255,0.12);
-  border: 1px solid rgba(255,255,255,0.3);
-  color: #fff;
-  padding: 10px 14px;
-  border-radius: 50%;
-  font-size: 0.9rem;
-  cursor: pointer;
-  z-index: 5;
-  display: none;
-}
-
-/* SEÇÕES */
-.section {
-  min-height: 100vh;
-  padding: 90px 8%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.photo-block {
-  max-width: 720px;
-  opacity: 0;
-  transform: translateY(80px);
-  transition: all 1.2s ease;
-}
-
-.photo-block.visible {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-.photo-block.left { transform: translate(-40px, 80px); }
-.photo-block.right { transform: translate(40px, 80px); }
+.photo-block.visible{opacity:1;transform:translateY(0)}
+.photo-block.left{transform:translate(-40px,80px)}
+.photo-block.right{transform:translate(40px,80px)}
 .photo-block.visible.left,
-.photo-block.visible.right {
-  transform: translate(0,0);
-}
+.photo-block.visible.right{transform:translate(0,0)}
 
-img, video {
-  width: 100%;
-  border-radius: 22px;
-  display: block;
+img,video{
+  width:100%;
+  border-radius:22px;
+  display:block;
 }
 
 /* CARROSSEL */
-.carousel {
-  position: relative;
-  overflow: hidden;
+.carousel{overflow:hidden}
+.carousel-track{display:flex;transition:transform .8s ease}
+.carousel-slide{min-width:100%;padding:0 10px}
+.carousel-buttons{text-align:center;margin-top:18px}
+.carousel-buttons button{margin:0 8px}
+
+/* VIDEO */
+.video-wrapper{position:relative}
+.video-overlay{
+  position:absolute;inset:0;
+  background:rgba(0,0,0,.45);
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  font-family:'Playfair Display',serif;
+  font-size:1.4rem;
+  cursor:pointer;
+  border-radius:22px;
+  z-index:2;
 }
 
-.carousel-track {
-  display: flex;
-  transition: transform 0.8s ease;
+.caption{
+  margin-top:22px;
+  font-family:'Cormorant Garamond',serif;
+  font-size:1.5rem;
+  line-height:1.4;
+  text-align:center;
+  white-space:pre-line;
 }
 
-.carousel-slide {
-  min-width: 100%;
-  padding: 0 10px;
+.counter{
+  font-family:'Playfair Display',serif;
+  font-size:2rem;
+  text-align:center;
+  margin:120px 20px 60px;
 }
 
-.carousel-buttons {
-  text-align: center;
-  margin-top: 18px;
-}
-
-.carousel-buttons button {
-  margin: 0 8px;
-}
-
-/* VIDEO IPHONE */
-.video-wrapper {
-  position: relative;
-}
-
-.video-overlay {
-  position: absolute;
-  inset: 0;
-  background: rgba(0,0,0,0.45);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-family: 'Playfair Display', serif;
-  font-size: 1.4rem;
-  cursor: pointer;
-  border-radius: 22px;
-  z-index: 2;
-}
-
-.caption {
-  margin-top: 22px;
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 1.5rem;
-  line-height: 1.4;
-  text-align: center;
-  white-space: pre-line;
-}
-
-/* CONTADOR */
-.counter {
-  font-family: 'Playfair Display', serif;
-  font-size: 2rem;
-  text-align: center;
-  margin: 120px 20px 60px;
-}
-
-.final {
-  font-family: 'Playfair Display', serif;
-  font-size: 2.6rem;
-  text-align: center;
-  padding: 120px 20px;
+.final{
+  font-family:'Playfair Display',serif;
+  font-size:2.6rem;
+  text-align:center;
+  padding:120px 20px;
 }
 </style>
 </head>
@@ -191,7 +145,7 @@ img, video {
   <button onclick="goMusic()">Começar</button>
 </div>
 
-<!-- TELA MÚSICA -->
+<!-- MÚSICA -->
 <div id="musicScreen" class="screen hidden">
   <div id="typedText" class="typewriter"></div>
   <img src="foto-musica.jpg" style="width:260px;border-radius:20px;margin:20px 0;">
@@ -212,7 +166,7 @@ img, video {
     </div>
   </section>
 
-  <!-- FOTO SENDO FOFA -->
+  <!-- SENDO FOFA -->
   <section class="section">
     <div class="photo-block right">
       <img src="foto-sendo-fofa.jpg">
@@ -222,15 +176,20 @@ img, video {
 
   <!-- CARROSSEL -->
   <section class="section">
-    <div class="photo-block visible carousel">
+    <div class="photo-block carousel visible">
       <div class="carousel-track" id="carouselTrack">
         <div class="carousel-slide">
           <img src="foto-praia.jpg">
-          <div class="caption">Cada segundo junto com você é especial. Me apaixonar por você foi a melhor coisa que já me aconteceu</div>
+          <div class="caption">
+Cada segundo junto com você é especial.
+Me apaixonar por você foi a melhor coisa que já me aconteceu
+          </div>
         </div>
         <div class="carousel-slide">
           <img src="foto-oculos.jpg">
-          <div class="caption">A sua energia é a coisa mais linda que já conheci</div>
+          <div class="caption">
+A sua energia é a coisa mais linda que já conheci
+          </div>
         </div>
       </div>
       <div class="carousel-buttons">
@@ -240,11 +199,17 @@ img, video {
     </div>
   </section>
 
-  <!-- OLHAR -->
+  <!-- OLHAR COM SEGREDO -->
   <section class="section">
     <div class="photo-block left">
-      <img src="foto-olhar.jpg">
-      <div class="caption">sou completamente apaixonado por seus olhos e pela forma que olha pra mim</div>
+      <img id="olharImg" src="foto-olhar.jpg" onclick="revealSecret()" style="cursor:pointer;">
+      <div class="caption" id="olharCaption">
+sou completamente apaixonado por seus olhos e pela forma que olha pra mim
+
+<span style="font-size:1.1rem;opacity:.6;font-style:italic;">
+tem coisas que só aparecem quando a gente presta mais atenção…
+</span>
+      </div>
     </div>
   </section>
 
@@ -282,155 +247,127 @@ suave, natural e cheia de vida.
 </div>
 
 <script>
-/* TEXTO INTRO */
-const introText = "antes de qualquer coisa… eu queria que você sentisse isso com calma.";
-let ti = 0;
-function typeIntro() {
-  if (ti < introText.length) {
-    document.getElementById("typedText").textContent += introText.charAt(ti++);
-    setTimeout(typeIntro, 70);
+/* INTRO */
+const introText="antes de qualquer coisa… eu queria que você sentisse isso com calma.";
+let ti=0;
+function typeIntro(){
+  if(ti<introText.length){
+    typedText.textContent+=introText.charAt(ti++);
+    setTimeout(typeIntro,70);
   }
 }
 
 /* CONTADOR */
-function updateCounter() {
-  const start = new Date("2025-01-01T00:00:00");
-  const now = new Date();
-  const diff = now - start;
-  const d = Math.floor(diff / 86400000);
-  const h = Math.floor((diff / 3600000) % 24);
-  const m = Math.floor((diff / 60000) % 60);
-  document.getElementById("counter").innerHTML =
-    `Tempo que nos conhecemos:<br><strong>${d}</strong> dias, <strong>${h}</strong> horas e <strong>${m}</strong> minutos`;
+function updateCounter(){
+  const start=new Date("2025-02-01T00:00:00");
+  const now=new Date();
+  const diff=now-start;
+  const d=Math.floor(diff/86400000);
+  const h=Math.floor(diff/3600000)%24;
+  const m=Math.floor(diff/60000)%60;
+  counter.innerHTML=`Tempo que nos conhecemos:<br><strong>${d}</strong> dias, <strong>${h}</strong> horas e <strong>${m}</strong> minutos`;
 }
-setInterval(updateCounter, 1000);
+setInterval(updateCounter,1000);
 updateCounter();
 
 /* FLUXO */
-const intro = document.getElementById("intro");
-const musicScreen = document.getElementById("musicScreen");
-const content = document.getElementById("content");
-const music = document.getElementById("music");
-const pauseBtn = document.getElementById("pauseBtn");
-
-function goMusic() {
+function goMusic(){
   intro.classList.add("hidden");
   musicScreen.classList.remove("hidden");
   typeIntro();
 }
-
-function startExperience() {
-  music.volume = 0.6;
+function startExperience(){
+  music.volume=.6;
   music.play();
   musicScreen.classList.add("hidden");
   content.classList.remove("hidden");
-  pauseBtn.style.display = "block";
+  pauseBtn.style.display="block";
 }
-
-function toggleMusic() {
-  if (music.paused) {
-    music.play();
-    pauseBtn.textContent = "⏸";
-  } else {
-    music.pause();
-    pauseBtn.textContent = "▶";
-  }
+function toggleMusic(){
+  if(music.paused){music.play();pauseBtn.textContent="⏸"}
+  else{music.pause();pauseBtn.textContent="▶"}
 }
 
 /* VIDEO */
-function playVideo(el) {
-  const v = el.parentElement.querySelector("video");
-  el.style.display = "none";
+function playVideo(el){
+  const v=el.parentElement.querySelector("video");
+  el.style.display="none";
   v.play();
 }
 
 /* OBSERVER */
-const observer = new IntersectionObserver(entries=>{
-  entries.forEach(e=>{ if(e.isIntersecting) e.target.classList.add("visible"); });
-},{threshold:0.3});
+const observer=new IntersectionObserver(e=>{
+  e.forEach(x=>{if(x.isIntersecting)x.target.classList.add("visible")});
+},{threshold:.3});
 document.querySelectorAll(".photo-block").forEach(el=>observer.observe(el));
 
 /* CARROSSEL */
-let slide = 0;
-const track = document.getElementById("carouselTrack");
-function updateSlide(){ track.style.transform = `translateX(-${slide * 100}%)`; }
-function nextSlide(){ slide = (slide + 1) % 2; updateSlide(); }
-function prevSlide(){ slide = (slide - 1 + 2) % 2; updateSlide(); }
+let slide=0;
+function updateSlide(){carouselTrack.style.transform=`translateX(-${slide*100}%)`}
+function nextSlide(){slide=(slide+1)%2;updateSlide()}
+function prevSlide(){slide=(slide+1)%2;updateSlide()}
 
-/* TEXTO BOCHECHA COMPLETO */
-const textParts = [
-  "A vida ao seu lado é mais leve e divertida, ",
-  "você é meu lugar favorito no mundo, ",
-  "a minha pessoa preferida.\n\n",
-  "Se existirem mais vidas depois dessa ",
-  "eu te escolheria todas as vezes.\n\n",
-  "você é a minha maior certeza.\n\n",
-  "Esse é só o primeiro de muitos anos que ainda quero viver ao seu lado, ",
-  "juntinhos, você, nossos filhos, o Bento e eu.\n\n",
-  "Você é o resultado das minhas orações mais lindas. ",
-  "Muito obrigado por tudo meu amor, EU TE AMO."
-];
+/* SEGREDO OLHAR */
+let secret=false;
+function revealSecret(){
+  if(secret)return;
+  secret=true;
+  olharImg.style.opacity=0;
+  setTimeout(()=>{
+    olharImg.src="foto-olhar-secreto.jpg";
+    olharImg.style.opacity=1;
+    olharCaption.innerHTML=
+`O céu estava assim nos dias que nos conhecemos.
 
-let tp = 0, tc = 0;
-let cursor = true;
-const el = document.getElementById("bochechaText");
-
-const blink = setInterval(()=>{
-  cursor = !cursor;
-  el.innerHTML = el.innerHTML.replace(/\|?$/, cursor ? "|" : "");
-},500);
-
-function typeText() {
-  if (tp >= textParts.length) {
-    clearInterval(blink);
-    el.innerHTML = el.innerHTML.replace("|","");
-    return;
-  }
-  if (tc < textParts[tp].length) {
-    el.innerHTML = el.innerHTML.replace("|","") + textParts[tp].charAt(tc) + "|";
-    tc++;
-    setTimeout(typeText, 55);
-  } else {
-    tc = 0;
-    tp++;
-    setTimeout(typeText, 800);
-  }
+O brilho de todas essas estrelas juntas
+nem se compara com o brilho dos seus olhos`;
+  },800);
 }
 
-const obs = new IntersectionObserver(e=>{
-  if (e[0].isIntersecting) {
-    typeText();
-    obs.disconnect();
-  }
-},{threshold:0.5});
-obs.observe(el);
+/* TEXTO BOCHECHA */
+const parts=[
+"A vida ao seu lado é mais leve e divertida, ",
+"você é meu lugar favorito no mundo, ",
+"a minha pessoa preferida.\n\n",
+"Se existirem mais vidas depois dessa ",
+"eu te escolheria todas as vezes.\n\n",
+"você é a minha maior certeza.\n\n",
+"Esse é só o primeiro de muitos anos que ainda quero viver ao seu lado, ",
+"juntinhos, você, nossos filhos, o Bento e eu.\n\n",
+"Você é o resultado das minhas orações mais lindas. ",
+"Muito obrigado por tudo meu amor, EU TE AMO."
+];
+let pi=0,ci=0,cursor=true;
+const blink=setInterval(()=>{
+  cursor=!cursor;
+  bochechaText.innerHTML=bochechaText.innerHTML.replace(/\|?$/,cursor?"|":"");
+},500);
+function typeB(){
+  if(pi>=parts.length){clearInterval(blink);bochechaText.innerHTML=bochechaText.innerHTML.replace("|","");return;}
+  if(ci<parts[pi].length){
+    bochechaText.innerHTML=bochechaText.innerHTML.replace("|","")+parts[pi][ci++]+"|";
+    setTimeout(typeB,55);
+  }else{ci=0;pi++;setTimeout(typeB,800);}
+}
+new IntersectionObserver(e=>{
+  if(e[0].isIntersecting){typeB();e[0].target.observer=null}
+},{threshold:.5}).observe(bochechaText);
 
 /* PARTÍCULAS */
-const canvas = document.getElementById("particles");
-const ctx = canvas.getContext("2d");
-canvas.width = innerWidth;
-canvas.height = innerHeight;
-let p = Array.from({length:60},()=>({
-  x:Math.random()*canvas.width,
-  y:Math.random()*canvas.height,
-  r:Math.random()*1.5+0.5,
-  dx:(Math.random()-0.5)*0.3,
-  dy:(Math.random()-0.5)*0.3
-}));
-function anim(){
-  ctx.clearRect(0,0,canvas.width,canvas.height);
-  ctx.fillStyle="rgba(255,255,255,0.6)";
-  p.forEach(o=>{
-    ctx.beginPath();
-    ctx.arc(o.x,o.y,o.r,0,Math.PI*2);
-    ctx.fill();
-    o.x+=o.dx; o.y+=o.dy;
-    if(o.x<0||o.x>canvas.width) o.dx*=-1;
-    if(o.y<0||o.y>canvas.height) o.dy*=-1;
+const ctx=particles.getContext("2d");
+particles.width=innerWidth;particles.height=innerHeight;
+let pts=[...Array(60)].map(()=>({x:Math.random()*particles.width,y:Math.random()*particles.height,r:Math.random()*1.5+.5,dx:(Math.random()-.5)*.3,dy:(Math.random()-.5)*.3}));
+(function anim(){
+  ctx.clearRect(0,0,particles.width,particles.height);
+  ctx.fillStyle="rgba(255,255,255,.6)";
+  pts.forEach(p=>{
+    ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);ctx.fill();
+    p.x+=p.dx;p.y+=p.dy;
+    if(p.x<0||p.x>particles.width)p.dx*=-1;
+    if(p.y<0||p.y>particles.height)p.dy*=-1;
   });
   requestAnimationFrame(anim);
-}
-anim();
+})();
 </script>
 
 </body>

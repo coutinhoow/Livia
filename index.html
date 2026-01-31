@@ -55,7 +55,7 @@ h1 {
   transform: translateY(0);
 }
 
-.photo img, video {
+.photo img, .photo video {
   max-width: 90%;
   border-radius: 20px;
 }
@@ -73,7 +73,6 @@ h1 {
   gap: 40px;
   overflow-x: auto;
   scroll-snap-type: x mandatory;
-  padding: 40px 0;
 }
 
 .carousel::-webkit-scrollbar {
@@ -83,7 +82,6 @@ h1 {
 .carousel-item {
   min-width: 80%;
   scroll-snap-align: center;
-  text-align: center;
 }
 
 /* TEXTO DIGITADO */
@@ -127,7 +125,7 @@ h1 {
 
 <button id="pauseMusic">⏸</button>
 
-<!-- TELA 1 -->
+<!-- INTRO -->
 <section id="intro">
   <h1>Um ano de nós</h1>
   <button class="button" id="start">Começar</button>
@@ -158,11 +156,15 @@ h1 {
     <div class="carousel">
       <div class="carousel-item">
         <img src="foto-praia.jpg">
-        <div class="caption">Cada segundo junto com você é especial. Me apaixonar por você foi a melhor coisa que já me aconteceu</div>
+        <div class="caption">
+          Cada segundo junto com você é especial. Me apaixonar por você foi a melhor coisa que já me aconteceu
+        </div>
       </div>
       <div class="carousel-item">
         <img src="foto-oculos.jpg">
-        <div class="caption">A sua energia é a coisa mais linda que já conheci</div>
+        <div class="caption">
+          A sua energia é a coisa mais linda que já conheci
+        </div>
       </div>
     </div>
   </div>
@@ -173,10 +175,11 @@ h1 {
     <div class="caption">Tem algo escondido aqui… toque ✨</div>
   </div>
 
+  <!-- FOTO DO CÉU (SEGREDO) -->
   <div class="photo" id="segredo" style="display:none;">
     <img src="foto-ceu.jpg">
     <div class="caption">
-      O céu estava assim nos dias que nos conhecemos.  
+      O céu estava assim nos dias que nos conhecemos.<br>
       O brilho de todas essas estrelas juntas nem se compara com o brilho dos seus olhos.
     </div>
   </div>
@@ -189,8 +192,8 @@ h1 {
     </div>
   </div>
 
-  <!-- VÍDEO (IPHONE OK) -->
-  <div class="photo">
+  <!-- VÍDEO -->
+  <div class="photo video-block">
     <video src="video.mp4" controls playsinline preload="metadata"></video>
     <div class="caption">Amo cada momento junto com você</div>
   </div>
@@ -232,15 +235,17 @@ document.getElementById("pauseMusic").onclick = () => {
   music.paused ? music.play() : music.pause();
 };
 
-/* SCROLL */
+/* SCROLL + IOS SAFE */
 const photos = document.querySelectorAll(".photo");
-window.addEventListener("scroll", () => {
-  photos.forEach(p => {
-    if (p.getBoundingClientRect().top < window.innerHeight - 100) {
-      p.classList.add("show");
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add("show");
     }
   });
-});
+},{ threshold: 0.2 });
+
+photos.forEach(p => observer.observe(p));
 
 /* TEXTO DIGITADO */
 const text = `A vida ao seu lado é mais leve e divertida, você é meu lugar favorito no mundo.
@@ -260,10 +265,17 @@ function type() {
 }
 setTimeout(type, 1000);
 
-/* SEGREDO */
-document.getElementById("olhar").onclick = () => {
-  document.getElementById("segredo").style.display = "block";
-};
+/* SEGREDO OLHAR (CLICK + TOUCH) */
+const olhar = document.getElementById("olhar");
+const segredo = document.getElementById("segredo");
+
+function revelar() {
+  segredo.style.display = "block";
+  observer.observe(segredo);
+}
+
+olhar.addEventListener("click", revelar);
+olhar.addEventListener("touchstart", revelar);
 
 /* PRESENTE */
 document.getElementById("gift").onclick = () => {

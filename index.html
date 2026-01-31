@@ -5,12 +5,9 @@
 <title>Um ano de nós</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<!-- FONTES -->
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Montserrat:wght@300;500&display=swap" rel="stylesheet">
 
 <style>
-* { box-sizing: border-box; }
-
 body {
   margin: 0;
   background: black;
@@ -19,32 +16,20 @@ body {
   overflow-x: hidden;
 }
 
-/* FUNDO VIVO */
-canvas {
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index: -1;
-}
-
-/* TELAS */
 section {
   min-height: 100vh;
   padding: 80px 20px;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
-  flex-direction: column;
 }
 
-/* TÍTULO INICIAL */
-#intro h1 {
+h1 {
   font-family: 'Playfair Display', serif;
   font-size: 48px;
-  letter-spacing: 2px;
 }
 
-/* BOTÃO */
 .button {
   margin-top: 40px;
   padding: 15px 35px;
@@ -56,7 +41,7 @@ section {
   color: white;
 }
 
-/* BLOCO FOTO */
+/* FOTO */
 .photo {
   margin: 120px 0;
   text-align: center;
@@ -70,13 +55,11 @@ section {
   transform: translateY(0);
 }
 
-.photo img {
+.photo img, video {
   max-width: 90%;
-  border-radius: 18px;
-  box-shadow: 0 0 40px rgba(255,255,255,0.15);
+  border-radius: 20px;
 }
 
-/* LEGENDA */
 .caption {
   margin-top: 20px;
   font-family: 'Playfair Display', serif;
@@ -84,9 +67,27 @@ section {
   max-width: 800px;
 }
 
-/* FOTO BOCHECHA TEXTO DIGITADO */
+/* CARROSSEL */
+.carousel {
+  display: flex;
+  gap: 40px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  padding: 40px 0;
+}
+
+.carousel::-webkit-scrollbar {
+  display: none;
+}
+
+.carousel-item {
+  min-width: 80%;
+  scroll-snap-align: center;
+  text-align: center;
+}
+
+/* TEXTO DIGITADO */
 #typed {
-  font-size: 20px;
   white-space: pre-wrap;
 }
 
@@ -102,12 +103,6 @@ section {
   50% { opacity: 0; }
 }
 
-/* CONTADOR */
-#counter {
-  font-size: 22px;
-  margin-top: 40px;
-}
-
 /* BOTÃO PAUSE */
 #pauseMusic {
   position: fixed;
@@ -116,48 +111,37 @@ section {
   background: rgba(255,255,255,0.15);
   border: none;
   color: white;
-  padding: 10px 15px;
+  padding: 12px 15px;
   border-radius: 50%;
   cursor: pointer;
   z-index: 10;
-}
-
-/* PRESENTE */
-#gift {
-  font-size: 70px;
-  cursor: pointer;
-  animation: pulse 2s infinite;
-}
-
-@keyframes pulse {
-  0% { transform: scale(1); }
-  50% { transform: scale(1.15); }
-  100% { transform: scale(1); }
 }
 </style>
 </head>
 
 <body>
 
-<canvas id="bg"></canvas>
-
-<!-- MÚSICA -->
 <audio id="music" loop>
   <source src="musica.mp3" type="audio/mpeg">
 </audio>
 
 <button id="pauseMusic">⏸</button>
 
-<!-- INTRO -->
+<!-- TELA 1 -->
 <section id="intro">
   <h1>Um ano de nós</h1>
   <button class="button" id="start">Começar</button>
 </section>
 
+<!-- TELA MÚSICA -->
+<section id="musicScreen" style="display:none;">
+  <h1>Vamos colocar uma música antes de começar?</h1>
+  <img src="foto-musica.jpg" style="max-width:70%; border-radius:20px; margin:30px 0;">
+  <button class="button" id="playMusic">▶️ Play</button>
+</section>
+
 <!-- CONTEÚDO -->
 <section id="content" style="display:none;">
-
-  <div id="counter"></div>
 
   <div class="photo">
     <img src="foto-nossa.jpg">
@@ -171,19 +155,22 @@ section {
 
   <!-- CARROSSEL -->
   <div class="photo show">
-    <img src="foto-praia.jpg">
-    <div class="caption">Cada segundo junto com você é especial. Me apaixonar por você foi a melhor coisa que já me aconteceu.</div>
+    <div class="carousel">
+      <div class="carousel-item">
+        <img src="foto-praia.jpg">
+        <div class="caption">Cada segundo junto com você é especial. Me apaixonar por você foi a melhor coisa que já me aconteceu</div>
+      </div>
+      <div class="carousel-item">
+        <img src="foto-oculos.jpg">
+        <div class="caption">A sua energia é a coisa mais linda que já conheci</div>
+      </div>
+    </div>
   </div>
 
-  <div class="photo show">
-    <img src="foto-oculos.jpg">
-    <div class="caption">A sua energia é a coisa mais linda que já conheci</div>
-  </div>
-
-  <!-- FOTO OLHAR (SEGREDO) -->
+  <!-- OLHAR -->
   <div class="photo" id="olhar">
     <img src="foto-olhar.jpg">
-    <div class="caption">Tem algo escondido aqui… toque com carinho ✨</div>
+    <div class="caption">Tem algo escondido aqui… toque ✨</div>
   </div>
 
   <div class="photo" id="segredo" style="display:none;">
@@ -194,21 +181,21 @@ section {
     </div>
   </div>
 
-  <!-- FOTO BUQUÊ -->
+  <!-- BUQUÊ -->
   <div class="photo">
     <img src="foto-buque.jpg">
     <div class="caption">
-      A sua delicadeza lembra a de uma flor rara: suave, forte e impossível de não admirar.
+      A sua delicadeza é como a de uma flor: suave no toque, forte na essência e impossível de não admirar.
     </div>
   </div>
 
-  <!-- VÍDEO -->
+  <!-- VÍDEO (IPHONE OK) -->
   <div class="photo">
-    <video src="video.mp4" controls playsinline style="max-width:90%; border-radius:20px;"></video>
+    <video src="video.mp4" controls playsinline preload="metadata"></video>
     <div class="caption">Amo cada momento junto com você</div>
   </div>
 
-  <!-- FOTO BOCHECHA -->
+  <!-- BOCHECHA -->
   <div class="photo show">
     <img src="foto-bochecha.jpg">
     <div class="caption">
@@ -216,33 +203,36 @@ section {
     </div>
   </div>
 
-  <!-- PRESENTE FINAL -->
+  <!-- PRESENTE -->
   <div style="text-align:center; margin:150px 0;">
-    <div id="gift">🎁</div>
-    <p style="font-size:22px;">surpresa</p>
+    <div id="gift" style="font-size:70px; cursor:pointer;">🎁</div>
+    <p>surpresa</p>
   </div>
 
 </section>
 
 <script>
-/* INÍCIO */
-const startBtn = document.getElementById("start");
 const intro = document.getElementById("intro");
+const musicScreen = document.getElementById("musicScreen");
 const content = document.getElementById("content");
 const music = document.getElementById("music");
 
-startBtn.onclick = () => {
+document.getElementById("start").onclick = () => {
   intro.style.display = "none";
-  content.style.display = "block";
-  music.play();
+  musicScreen.style.display = "flex";
 };
 
-/* PAUSE */
+document.getElementById("playMusic").onclick = () => {
+  music.play();
+  musicScreen.style.display = "none";
+  content.style.display = "flex";
+};
+
 document.getElementById("pauseMusic").onclick = () => {
   music.paused ? music.play() : music.pause();
 };
 
-/* ANIMAÇÃO SCROLL */
+/* SCROLL */
 const photos = document.querySelectorAll(".photo");
 window.addEventListener("scroll", () => {
   photos.forEach(p => {
@@ -253,7 +243,7 @@ window.addEventListener("scroll", () => {
 });
 
 /* TEXTO DIGITADO */
-const text = `A vida ao seu lado é mais leve e divertida, você é meu lugar favorito no mundo, a minha pessoa preferida.
+const text = `A vida ao seu lado é mais leve e divertida, você é meu lugar favorito no mundo.
 Se existirem mais vidas depois dessa eu te escolheria todas as vezes.
 Você é a minha maior certeza.
 Esse é só o primeiro de muitos anos que ainda quero viver ao seu lado, juntinhos, você, nossos filhos, o Bento e eu.
@@ -270,18 +260,7 @@ function type() {
 }
 setTimeout(type, 1000);
 
-/* CONTADOR */
-const counter = document.getElementById("counter");
-const startDate = new Date("2025-02-01T00:00:00");
-
-setInterval(() => {
-  const now = new Date();
-  const diff = now - startDate;
-  const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-  counter.innerText = `Tempo que nos conhecemos: ${days} dias`;
-}, 1000);
-
-/* SEGREDO OLHAR */
+/* SEGREDO */
 document.getElementById("olhar").onclick = () => {
   document.getElementById("segredo").style.display = "block";
 };
@@ -290,37 +269,6 @@ document.getElementById("olhar").onclick = () => {
 document.getElementById("gift").onclick = () => {
   window.location.href = "surpresa.html";
 };
-
-/* FUNDO PARTÍCULAS */
-const canvas = document.getElementById("bg");
-const ctx = canvas.getContext("2d");
-canvas.width = window.innerWidth;
-canvas.height = window.innerHeight;
-
-let particles = Array.from({length:80}, () => ({
-  x: Math.random()*canvas.width,
-  y: Math.random()*canvas.height,
-  r: Math.random()*2+1,
-  dx: Math.random()*0.4,
-  dy: Math.random()*0.4
-}));
-
-function animate() {
-  ctx.clearRect(0,0,canvas.width,canvas.height);
-  ctx.fillStyle = "rgba(255,255,255,0.6)";
-  particles.forEach(p => {
-    p.x += p.dx;
-    p.y += p.dy;
-    if(p.x>canvas.width||p.y>canvas.height) {
-      p.x=0; p.y=Math.random()*canvas.height;
-    }
-    ctx.beginPath();
-    ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
-    ctx.fill();
-  });
-  requestAnimationFrame(animate);
-}
-animate();
 </script>
 
 </body>

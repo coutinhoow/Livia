@@ -8,13 +8,24 @@
 <link href="https://fonts.googleapis.com/css2?family=Italiana&family=Montserrat:wght@300;400;600&family=Playfair+Display:wght@500;700&family=Cormorant+Garamond:ital,wght@0,400;1,500&display=swap" rel="stylesheet">
 
 <style>
+* { box-sizing: border-box; }
+
 body {
   margin: 0;
   background: #000;
   color: #fff;
   font-family: 'Montserrat', sans-serif;
+  overflow-x: hidden;
 }
 
+/* FUNDO */
+#particles {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+}
+
+/* TELAS */
 .screen {
   position: fixed;
   inset: 0;
@@ -39,12 +50,16 @@ button {
   font-size: 1rem;
 }
 
-.music-screen img {
-  width: 280px;
-  border-radius: 20px;
-  margin: 25px 0;
+/* TEXTO DIGITADO */
+.typewriter {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.8rem;
+  max-width: 720px;
+  line-height: 1.4;
+  margin-bottom: 40px;
 }
 
+/* PAUSE */
 #pauseBtn {
   position: fixed;
   bottom: 20px;
@@ -60,9 +75,10 @@ button {
   display: none;
 }
 
+/* SEÇÕES */
 .section {
   min-height: 100vh;
-  padding: 80px 10%;
+  padding: 90px 8%;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -71,8 +87,8 @@ button {
 .photo-block {
   max-width: 720px;
   opacity: 0;
-  transform: translateY(60px);
-  transition: all 1.1s ease;
+  transform: translateY(80px);
+  transition: all 1.2s ease;
 }
 
 .photo-block.visible {
@@ -80,15 +96,17 @@ button {
   transform: translateY(0);
 }
 
-img {
-  width: 100%;
-  border-radius: 22px;
+.photo-block.left { transform: translate(-40px, 80px); }
+.photo-block.right { transform: translate(40px, 80px); }
+.photo-block.visible.left,
+.photo-block.visible.right {
+  transform: translate(0,0);
 }
 
-video {
+img, video {
   width: 100%;
-  display: block;
   border-radius: 22px;
+  display: block;
 }
 
 /* VIDEO IPHONE */
@@ -116,6 +134,15 @@ video {
   font-size: 1.5rem;
   line-height: 1.4;
   text-align: center;
+  white-space: pre-line;
+}
+
+/* CONTADOR */
+.counter {
+  font-family: 'Playfair Display', serif;
+  font-size: 2rem;
+  text-align: center;
+  margin: 120px 20px 60px;
 }
 
 .final {
@@ -129,6 +156,8 @@ video {
 
 <body>
 
+<canvas id="particles"></canvas>
+
 <audio id="music" src="musica.mp3" loop></audio>
 
 <!-- INTRO -->
@@ -138,9 +167,9 @@ video {
 </div>
 
 <!-- TELA MÚSICA -->
-<div id="musicScreen" class="screen music-screen hidden">
-  <p style="font-size:1.2rem;">vamos por uma música antes de começar</p>
-  <img src="foto-musica.jpg">
+<div id="musicScreen" class="screen hidden">
+  <div id="typedText" class="typewriter"></div>
+  <img src="foto-musica.jpg" style="width:260px;border-radius:20px;margin:20px 0;">
   <button onclick="startExperience()">▶ tocar e continuar</button>
 </div>
 
@@ -148,40 +177,41 @@ video {
 
 <div id="content" class="hidden">
 
+  <div class="counter" id="counter"></div>
+
   <section class="section">
-    <div class="photo-block">
+    <div class="photo-block left">
       <img src="foto-nossa.jpg">
       <div class="caption">Estar com você é a melhor decisão que eu poderia ter tido</div>
     </div>
   </section>
 
   <section class="section">
-    <div class="photo-block">
+    <div class="photo-block right">
       <img src="foto-sendo-fofa.jpg">
       <div class="caption">muito obrigado por ser tão carinhosa</div>
     </div>
   </section>
 
   <section class="section">
-    <div class="photo-block">
+    <div class="photo-block left">
       <img src="foto-olhar.jpg">
       <div class="caption">sou completamente apaixonado por seus olhos e pela forma que olha pra mim</div>
     </div>
   </section>
 
   <section class="section">
-    <div class="photo-block">
+    <div class="photo-block right">
       <img src="foto-buque.jpg">
       <div class="caption">
-        A sua delicadeza lembra a de uma flor: suave, natural e cheia de vida.
-        Você não precisa chamar atenção para ser especial — você simplesmente é.
+A sua delicadeza lembra a de uma flor: suave, natural e cheia de vida.
+Você não precisa chamar atenção para ser especial — você simplesmente é.
       </div>
     </div>
   </section>
 
-  <!-- VIDEO -->
   <section class="section">
-    <div class="photo-block video-wrapper">
+    <div class="photo-block video-wrapper left">
       <div class="video-overlay" onclick="playVideo(this)">▶ tocar vídeo</div>
       <video muted playsinline preload="metadata">
         <source src="video-final.mp4" type="video/mp4">
@@ -191,17 +221,9 @@ video {
   </section>
 
   <section class="section">
-    <div class="photo-block">
+    <div class="photo-block right">
       <img src="foto-bochecha.jpg">
-      <div class="caption">
-        A vida ao seu lado é mais leve e divertida, você é meu lugar favorito no mundo,
-        a minha pessoa preferida. Se existirem mais vidas depois dessa eu te escolheria
-        todas as vezes. você é a minha maior certeza.
-        <br><br>
-        Esse é só o primeiro de muitos anos que ainda quero viver ao seu lado, juntinhos,
-        você, nossos filhos, o Bento e eu. Você é o resultado das minhas orações mais lindas.
-        Muito obrigado por tudo meu amor, <strong>EU TE AMO.</strong>
-      </div>
+      <div class="caption" id="bochechaText"></div>
     </div>
   </section>
 
@@ -209,6 +231,35 @@ video {
 </div>
 
 <script>
+/* TEXTO INICIAL */
+const introText = "antes de qualquer coisa… eu queria que você sentisse isso com calma.";
+let ti = 0;
+function typeIntro() {
+  if (ti < introText.length) {
+    document.getElementById("typedText").textContent += introText.charAt(ti);
+    ti++;
+    setTimeout(typeIntro, 70);
+  }
+}
+
+/* CONTADOR */
+function updateCounter() {
+  const start = new Date("2025-01-01T00:00:00");
+  const now = new Date();
+  const diff = now - start;
+  const days = Math.floor(diff / 86400000);
+  const hours = Math.floor((diff / 3600000) % 24);
+  const minutes = Math.floor((diff / 60000) % 60);
+
+  document.getElementById("counter").innerHTML =
+    `Tempo que nos conhecemos:<br><strong>${days}</strong> dias,
+     <strong>${hours}</strong> horas e
+     <strong>${minutes}</strong> minutos`;
+}
+setInterval(updateCounter, 1000);
+updateCounter();
+
+/* FLUXO */
 const intro = document.getElementById("intro");
 const musicScreen = document.getElementById("musicScreen");
 const content = document.getElementById("content");
@@ -218,6 +269,7 @@ const pauseBtn = document.getElementById("pauseBtn");
 function goMusic() {
   intro.classList.add("hidden");
   musicScreen.classList.remove("hidden");
+  typeIntro();
 }
 
 function startExperience() {
@@ -244,15 +296,104 @@ function playVideo(el) {
   video.play();
 }
 
+/* ANIMAÇÕES */
 const observer = new IntersectionObserver(entries => {
   entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      entry.target.classList.add("visible");
-    }
+    if (entry.isIntersecting) entry.target.classList.add("visible");
   });
-}, { threshold: 0.4 });
+}, { threshold: 0.3 });
 
 document.querySelectorAll(".photo-block").forEach(el => observer.observe(el));
+
+/* TEXTO BOCHECHA COM CURSOR */
+const bochechaParts = [
+  { text: "A vida ao seu lado é mais leve e divertida,", d:60 },
+  { text: " você é meu lugar favorito no mundo,", d:60 },
+  { text: " a minha pessoa preferida.", d:60 },
+  { pause:800 },
+  { text: " Se existirem mais vidas depois dessa", d:60 },
+  { text: " eu te escolheria todas as vezes.", d:60 },
+  { pause:800 },
+  { text: " você é a minha maior certeza.", d:60 },
+  { pause:1200 },
+  { text: "\n\nEsse é só o primeiro de muitos anos que ainda quero viver ao seu lado,", d:55 },
+  { text: " juntinhos, você, nossos filhos, o Bento e eu.", d:55 },
+  { pause:900 },
+  { text: " Você é o resultado das minhas orações mais lindas.", d:55 },
+  { pause:900 },
+  { text: " Muito obrigado por tudo meu amor, EU TE AMO.", d:70 }
+];
+
+let bp = 0, bc = 0;
+let cursor = true;
+const bt = document.getElementById("bochechaText");
+
+const cursorBlink = setInterval(()=>{
+  cursor = !cursor;
+  bt.innerHTML = bt.innerHTML.replace(/\|?$/, cursor ? "|" : "");
+},500);
+
+function typeBochecha() {
+  if (bp >= bochechaParts.length) {
+    clearInterval(cursorBlink);
+    bt.innerHTML = bt.innerHTML.replace("|","");
+    return;
+  }
+
+  const part = bochechaParts[bp];
+  if (part.pause) {
+    setTimeout(()=>bp++, part.pause);
+    return;
+  }
+
+  if (bc < part.text.length) {
+    bt.innerHTML = bt.innerHTML.replace("|","") + part.text.charAt(bc) + "|";
+    bc++;
+    setTimeout(typeBochecha, part.d);
+  } else {
+    bc = 0;
+    bp++;
+    setTimeout(typeBochecha, 300);
+  }
+}
+
+const bObs = new IntersectionObserver(e=>{
+  if (e[0].isIntersecting) {
+    typeBochecha();
+    bObs.disconnect();
+  }
+},{threshold:0.5});
+
+bObs.observe(bt);
+
+/* PARTÍCULAS */
+const canvas = document.getElementById("particles");
+const ctx = canvas.getContext("2d");
+canvas.width = innerWidth;
+canvas.height = innerHeight;
+
+let parts = Array.from({length:60},()=>({
+  x:Math.random()*canvas.width,
+  y:Math.random()*canvas.height,
+  r:Math.random()*1.5+0.5,
+  dx:(Math.random()-0.5)*0.3,
+  dy:(Math.random()-0.5)*0.3
+}));
+
+function animate(){
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  ctx.fillStyle="rgba(255,255,255,0.6)";
+  parts.forEach(p=>{
+    ctx.beginPath();
+    ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+    ctx.fill();
+    p.x+=p.dx; p.y+=p.dy;
+    if(p.x<0||p.x>canvas.width) p.dx*=-1;
+    if(p.y<0||p.y>canvas.height) p.dy*=-1;
+  });
+  requestAnimationFrame(animate);
+}
+animate();
 </script>
 
 </body>

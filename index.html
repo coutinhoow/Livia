@@ -2,372 +2,325 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Um ano de nós</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<link href="https://fonts.googleapis.com/css2?family=Italiana&family=Montserrat:wght@300;400;600&family=Playfair+Display:wght@500;700&family=Cormorant+Garamond:ital,wght@0,400;1,500&display=swap" rel="stylesheet">
+<!-- FONTES -->
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Montserrat:wght@300;500&display=swap" rel="stylesheet">
 
 <style>
-*{box-sizing:border-box}
-body{
-  margin:0;
-  background:#000;
-  color:#fff;
-  font-family:'Montserrat',sans-serif;
-  overflow-x:hidden;
-}
-#particles{position:fixed;inset:0;z-index:-1}
+* { box-sizing: border-box; }
 
-.screen{
-  position:fixed;inset:0;
-  background:#000;
-  display:flex;
-  flex-direction:column;
-  justify-content:center;
-  align-items:center;
-  text-align:center;
-  z-index:10;
-}
-.hidden{display:none}
-
-button{
-  padding:14px 38px;
-  border-radius:40px;
-  border:1px solid #fff;
-  background:transparent;
-  color:#fff;
-  cursor:pointer;
-  font-size:1rem;
+body {
+  margin: 0;
+  background: black;
+  color: white;
+  font-family: 'Montserrat', sans-serif;
+  overflow-x: hidden;
 }
 
-.typewriter{
-  font-family:'Cormorant Garamond',serif;
-  font-size:1.8rem;
-  max-width:720px;
-  line-height:1.4;
-  margin-bottom:40px;
+/* FUNDO VIVO */
+canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: -1;
 }
 
-#pauseBtn{
-  position:fixed;
-  bottom:20px;right:20px;
-  background:rgba(255,255,255,0.12);
-  border:1px solid rgba(255,255,255,0.3);
-  padding:10px 14px;
-  border-radius:50%;
-  cursor:pointer;
-  z-index:5;
-  display:none;
+/* TELAS */
+section {
+  min-height: 100vh;
+  padding: 80px 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
 }
 
-.section{
-  min-height:100vh;
-  padding:90px 8%;
-  display:flex;
-  justify-content:center;
-  align-items:center;
+/* TÍTULO INICIAL */
+#intro h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: 48px;
+  letter-spacing: 2px;
 }
 
-.photo-block{
-  max-width:720px;
-  opacity:0;
-  transform:translateY(80px);
-  transition:all 1.2s ease;
-}
-.photo-block.visible{opacity:1;transform:translateY(0)}
-.photo-block.left{transform:translate(-40px,80px)}
-.photo-block.right{transform:translate(40px,80px)}
-.photo-block.visible.left,
-.photo-block.visible.right{transform:translate(0,0)}
-
-img,video{
-  width:100%;
-  border-radius:22px;
-  display:block;
+/* BOTÃO */
+.button {
+  margin-top: 40px;
+  padding: 15px 35px;
+  font-size: 18px;
+  border-radius: 30px;
+  border: none;
+  cursor: pointer;
+  background: linear-gradient(135deg, #ff4d6d, #ff8fa3);
+  color: white;
 }
 
-/* CARROSSEL */
-.carousel{overflow:hidden}
-.carousel-track{display:flex;transition:transform .8s ease}
-.carousel-slide{min-width:100%;padding:0 10px}
-.carousel-buttons{text-align:center;margin-top:18px}
-.carousel-buttons button{margin:0 8px}
-
-/* VIDEO */
-.video-wrapper{position:relative}
-.video-overlay{
-  position:absolute;inset:0;
-  background:rgba(0,0,0,.45);
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  font-family:'Playfair Display',serif;
-  font-size:1.4rem;
-  cursor:pointer;
-  border-radius:22px;
-  z-index:2;
+/* BLOCO FOTO */
+.photo {
+  margin: 120px 0;
+  text-align: center;
+  opacity: 0;
+  transform: translateY(60px);
+  transition: 1s ease;
 }
 
-.caption{
-  margin-top:22px;
-  font-family:'Cormorant Garamond',serif;
-  font-size:1.5rem;
-  line-height:1.4;
-  text-align:center;
-  white-space:pre-line;
+.photo.show {
+  opacity: 1;
+  transform: translateY(0);
 }
 
-.counter{
-  font-family:'Playfair Display',serif;
-  font-size:2rem;
-  text-align:center;
-  margin:120px 20px 60px;
+.photo img {
+  max-width: 90%;
+  border-radius: 18px;
+  box-shadow: 0 0 40px rgba(255,255,255,0.15);
 }
 
-.final{
-  font-family:'Playfair Display',serif;
-  font-size:2.6rem;
-  text-align:center;
-  padding:120px 20px;
+/* LEGENDA */
+.caption {
+  margin-top: 20px;
+  font-family: 'Playfair Display', serif;
+  font-size: 22px;
+  max-width: 800px;
+}
+
+/* FOTO BOCHECHA TEXTO DIGITADO */
+#typed {
+  font-size: 20px;
+  white-space: pre-wrap;
+}
+
+.cursor {
+  display: inline-block;
+  width: 2px;
+  height: 1em;
+  background: white;
+  animation: blink 1s infinite;
+}
+
+@keyframes blink {
+  50% { opacity: 0; }
+}
+
+/* CONTADOR */
+#counter {
+  font-size: 22px;
+  margin-top: 40px;
+}
+
+/* BOTÃO PAUSE */
+#pauseMusic {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: rgba(255,255,255,0.15);
+  border: none;
+  color: white;
+  padding: 10px 15px;
+  border-radius: 50%;
+  cursor: pointer;
+  z-index: 10;
+}
+
+/* PRESENTE */
+#gift {
+  font-size: 70px;
+  cursor: pointer;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.15); }
+  100% { transform: scale(1); }
 }
 </style>
 </head>
 
 <body>
 
-<canvas id="particles"></canvas>
-
-<audio id="music" src="musica.mp3" loop></audio>
-
-<!-- INTRO -->
-<div id="intro" class="screen">
-  <h1 style="font-family:Italiana;font-size:3rem;">Um ano de nós</h1>
-  <button onclick="goMusic()">Começar</button>
-</div>
+<canvas id="bg"></canvas>
 
 <!-- MÚSICA -->
-<div id="musicScreen" class="screen hidden">
-  <div id="typedText" class="typewriter"></div>
-  <img src="foto-musica.jpg" style="width:260px;border-radius:20px;margin:20px 0;">
-  <button onclick="startExperience()">▶ tocar e continuar</button>
-</div>
+<audio id="music" loop>
+  <source src="musica.mp3" type="audio/mpeg">
+</audio>
 
-<button id="pauseBtn" onclick="toggleMusic()">⏸</button>
+<button id="pauseMusic">⏸</button>
 
-<div id="content" class="hidden">
+<!-- INTRO -->
+<section id="intro">
+  <h1>Um ano de nós</h1>
+  <button class="button" id="start">Começar</button>
+</section>
 
-  <div class="counter" id="counter"></div>
+<!-- CONTEÚDO -->
+<section id="content" style="display:none;">
 
-  <!-- FOTO NOSSA -->
-  <section class="section">
-    <div class="photo-block left">
-      <img src="foto-nossa.jpg">
-      <div class="caption">Estar com você é a melhor decisão que eu poderia ter tido</div>
-    </div>
-  </section>
+  <div id="counter"></div>
 
-  <!-- SENDO FOFA -->
-  <section class="section">
-    <div class="photo-block right">
-      <img src="foto-sendo-fofa.jpg">
-      <div class="caption">muito obrigado por ser tão carinhosa</div>
-    </div>
-  </section>
+  <div class="photo">
+    <img src="foto-nossa.jpg">
+    <div class="caption">Estar com você é a melhor decisão que eu poderia ter tido</div>
+  </div>
+
+  <div class="photo">
+    <img src="foto-sendo-fofa.jpg">
+    <div class="caption">Muito obrigado por ser tão carinhosa</div>
+  </div>
 
   <!-- CARROSSEL -->
-  <section class="section">
-    <div class="photo-block carousel visible">
-      <div class="carousel-track" id="carouselTrack">
-        <div class="carousel-slide">
-          <img src="foto-praia.jpg">
-          <div class="caption">
-Cada segundo junto com você é especial.
-Me apaixonar por você foi a melhor coisa que já me aconteceu
-          </div>
-        </div>
-        <div class="carousel-slide">
-          <img src="foto-oculos.jpg">
-          <div class="caption">
-A sua energia é a coisa mais linda que já conheci
-          </div>
-        </div>
-      </div>
-      <div class="carousel-buttons">
-        <button onclick="prevSlide()">◀</button>
-        <button onclick="nextSlide()">▶</button>
-      </div>
+  <div class="photo show">
+    <img src="foto-praia.jpg">
+    <div class="caption">Cada segundo junto com você é especial. Me apaixonar por você foi a melhor coisa que já me aconteceu.</div>
+  </div>
+
+  <div class="photo show">
+    <img src="foto-oculos.jpg">
+    <div class="caption">A sua energia é a coisa mais linda que já conheci</div>
+  </div>
+
+  <!-- FOTO OLHAR (SEGREDO) -->
+  <div class="photo" id="olhar">
+    <img src="foto-olhar.jpg">
+    <div class="caption">Tem algo escondido aqui… toque com carinho ✨</div>
+  </div>
+
+  <div class="photo" id="segredo" style="display:none;">
+    <img src="foto-ceu.jpg">
+    <div class="caption">
+      O céu estava assim nos dias que nos conhecemos.  
+      O brilho de todas essas estrelas juntas nem se compara com o brilho dos seus olhos.
     </div>
-  </section>
+  </div>
 
-  <!-- OLHAR COM SEGREDO -->
-  <section class="section">
-    <div class="photo-block left">
-      <img id="olharImg" src="foto-olhar.jpg" onclick="revealSecret()" style="cursor:pointer;">
-      <div class="caption" id="olharCaption">
-sou completamente apaixonado por seus olhos e pela forma que olha pra mim
-
-<span style="font-size:1.1rem;opacity:.6;font-style:italic;">
-tem coisas que só aparecem quando a gente presta mais atenção…
-</span>
-      </div>
+  <!-- FOTO BUQUÊ -->
+  <div class="photo">
+    <img src="foto-buque.jpg">
+    <div class="caption">
+      A sua delicadeza lembra a de uma flor rara: suave, forte e impossível de não admirar.
     </div>
-  </section>
+  </div>
 
-  <!-- BUQUÊ -->
-  <section class="section">
-    <div class="photo-block right">
-      <img src="foto-buque.jpg">
-      <div class="caption">
-A sua delicadeza lembra a de uma flor:
-suave, natural e cheia de vida.
-      </div>
+  <!-- VÍDEO -->
+  <div class="photo">
+    <video src="video.mp4" controls playsinline style="max-width:90%; border-radius:20px;"></video>
+    <div class="caption">Amo cada momento junto com você</div>
+  </div>
+
+  <!-- FOTO BOCHECHA -->
+  <div class="photo show">
+    <img src="foto-bochecha.jpg">
+    <div class="caption">
+      <span id="typed"></span><span class="cursor"></span>
     </div>
-  </section>
+  </div>
 
-  <!-- VIDEO -->
-  <section class="section">
-    <div class="photo-block video-wrapper left">
-      <div class="video-overlay" onclick="playVideo(this)">▶ tocar vídeo</div>
-      <video muted playsinline preload="metadata">
-        <source src="video-final.mp4" type="video/mp4">
-      </video>
-      <div class="caption">amo cada momento junto com você</div>
-    </div>
-  </section>
+  <!-- PRESENTE FINAL -->
+  <div style="text-align:center; margin:150px 0;">
+    <div id="gift">🎁</div>
+    <p style="font-size:22px;">surpresa</p>
+  </div>
 
-  <!-- BOCHECHA -->
-  <section class="section">
-    <div class="photo-block right">
-      <img src="foto-bochecha.jpg">
-      <div class="caption" id="bochechaText"></div>
-    </div>
-  </section>
-
-  <div class="final">compartilhar a vida com você é bom demais</div>
-</div>
+</section>
 
 <script>
-/* INTRO */
-const introText="antes de qualquer coisa… eu queria que você sentisse isso com calma.";
-let ti=0;
-function typeIntro(){
-  if(ti<introText.length){
-    typedText.textContent+=introText.charAt(ti++);
-    setTimeout(typeIntro,70);
+/* INÍCIO */
+const startBtn = document.getElementById("start");
+const intro = document.getElementById("intro");
+const content = document.getElementById("content");
+const music = document.getElementById("music");
+
+startBtn.onclick = () => {
+  intro.style.display = "none";
+  content.style.display = "block";
+  music.play();
+};
+
+/* PAUSE */
+document.getElementById("pauseMusic").onclick = () => {
+  music.paused ? music.play() : music.pause();
+};
+
+/* ANIMAÇÃO SCROLL */
+const photos = document.querySelectorAll(".photo");
+window.addEventListener("scroll", () => {
+  photos.forEach(p => {
+    if (p.getBoundingClientRect().top < window.innerHeight - 100) {
+      p.classList.add("show");
+    }
+  });
+});
+
+/* TEXTO DIGITADO */
+const text = `A vida ao seu lado é mais leve e divertida, você é meu lugar favorito no mundo, a minha pessoa preferida.
+Se existirem mais vidas depois dessa eu te escolheria todas as vezes.
+Você é a minha maior certeza.
+Esse é só o primeiro de muitos anos que ainda quero viver ao seu lado, juntinhos, você, nossos filhos, o Bento e eu.
+Você é o resultado das minhas orações mais lindas.
+Muito obrigado por tudo meu amor, EU TE AMO.`;
+
+let i = 0;
+function type() {
+  if (i < text.length) {
+    document.getElementById("typed").innerHTML += text[i];
+    i++;
+    setTimeout(type, text[i-1] === "," ? 300 : 60);
   }
 }
+setTimeout(type, 1000);
 
 /* CONTADOR */
-function updateCounter(){
-  const start=new Date("2025-02-01T00:00:00");
-  const now=new Date();
-  const diff=now-start;
-  const d=Math.floor(diff/86400000);
-  const h=Math.floor(diff/3600000)%24;
-  const m=Math.floor(diff/60000)%60;
-  counter.innerHTML=`Tempo que nos conhecemos:<br><strong>${d}</strong> dias, <strong>${h}</strong> horas e <strong>${m}</strong> minutos`;
-}
-setInterval(updateCounter,1000);
-updateCounter();
+const counter = document.getElementById("counter");
+const startDate = new Date("2025-02-01T00:00:00");
 
-/* FLUXO */
-function goMusic(){
-  intro.classList.add("hidden");
-  musicScreen.classList.remove("hidden");
-  typeIntro();
-}
-function startExperience(){
-  music.volume=.6;
-  music.play();
-  musicScreen.classList.add("hidden");
-  content.classList.remove("hidden");
-  pauseBtn.style.display="block";
-}
-function toggleMusic(){
-  if(music.paused){music.play();pauseBtn.textContent="⏸"}
-  else{music.pause();pauseBtn.textContent="▶"}
-}
-
-/* VIDEO */
-function playVideo(el){
-  const v=el.parentElement.querySelector("video");
-  el.style.display="none";
-  v.play();
-}
-
-/* OBSERVER */
-const observer=new IntersectionObserver(e=>{
-  e.forEach(x=>{if(x.isIntersecting)x.target.classList.add("visible")});
-},{threshold:.3});
-document.querySelectorAll(".photo-block").forEach(el=>observer.observe(el));
-
-/* CARROSSEL */
-let slide=0;
-function updateSlide(){carouselTrack.style.transform=`translateX(-${slide*100}%)`}
-function nextSlide(){slide=(slide+1)%2;updateSlide()}
-function prevSlide(){slide=(slide+1)%2;updateSlide()}
+setInterval(() => {
+  const now = new Date();
+  const diff = now - startDate;
+  const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+  counter.innerText = `Tempo que nos conhecemos: ${days} dias`;
+}, 1000);
 
 /* SEGREDO OLHAR */
-let secret=false;
-function revealSecret(){
-  if(secret)return;
-  secret=true;
-  olharImg.style.opacity=0;
-  setTimeout(()=>{
-    olharImg.src="foto-olhar-secreto.jpg";
-    olharImg.style.opacity=1;
-    olharCaption.innerHTML=
-`O céu estava assim nos dias que nos conhecemos.
+document.getElementById("olhar").onclick = () => {
+  document.getElementById("segredo").style.display = "block";
+};
 
-O brilho de todas essas estrelas juntas
-nem se compara com o brilho dos seus olhos`;
-  },800);
-}
+/* PRESENTE */
+document.getElementById("gift").onclick = () => {
+  window.location.href = "surpresa.html";
+};
 
-/* TEXTO BOCHECHA */
-const parts=[
-"A vida ao seu lado é mais leve e divertida, ",
-"você é meu lugar favorito no mundo, ",
-"a minha pessoa preferida.\n\n",
-"Se existirem mais vidas depois dessa ",
-"eu te escolheria todas as vezes.\n\n",
-"você é a minha maior certeza.\n\n",
-"Esse é só o primeiro de muitos anos que ainda quero viver ao seu lado, ",
-"juntinhos, você, nossos filhos, o Bento e eu.\n\n",
-"Você é o resultado das minhas orações mais lindas. ",
-"Muito obrigado por tudo meu amor, EU TE AMO."
-];
-let pi=0,ci=0,cursor=true;
-const blink=setInterval(()=>{
-  cursor=!cursor;
-  bochechaText.innerHTML=bochechaText.innerHTML.replace(/\|?$/,cursor?"|":"");
-},500);
-function typeB(){
-  if(pi>=parts.length){clearInterval(blink);bochechaText.innerHTML=bochechaText.innerHTML.replace("|","");return;}
-  if(ci<parts[pi].length){
-    bochechaText.innerHTML=bochechaText.innerHTML.replace("|","")+parts[pi][ci++]+"|";
-    setTimeout(typeB,55);
-  }else{ci=0;pi++;setTimeout(typeB,800);}
-}
-new IntersectionObserver(e=>{
-  if(e[0].isIntersecting){typeB();e[0].target.observer=null}
-},{threshold:.5}).observe(bochechaText);
+/* FUNDO PARTÍCULAS */
+const canvas = document.getElementById("bg");
+const ctx = canvas.getContext("2d");
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
 
-/* PARTÍCULAS */
-const ctx=particles.getContext("2d");
-particles.width=innerWidth;particles.height=innerHeight;
-let pts=[...Array(60)].map(()=>({x:Math.random()*particles.width,y:Math.random()*particles.height,r:Math.random()*1.5+.5,dx:(Math.random()-.5)*.3,dy:(Math.random()-.5)*.3}));
-(function anim(){
-  ctx.clearRect(0,0,particles.width,particles.height);
-  ctx.fillStyle="rgba(255,255,255,.6)";
-  pts.forEach(p=>{
-    ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);ctx.fill();
-    p.x+=p.dx;p.y+=p.dy;
-    if(p.x<0||p.x>particles.width)p.dx*=-1;
-    if(p.y<0||p.y>particles.height)p.dy*=-1;
+let particles = Array.from({length:80}, () => ({
+  x: Math.random()*canvas.width,
+  y: Math.random()*canvas.height,
+  r: Math.random()*2+1,
+  dx: Math.random()*0.4,
+  dy: Math.random()*0.4
+}));
+
+function animate() {
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  ctx.fillStyle = "rgba(255,255,255,0.6)";
+  particles.forEach(p => {
+    p.x += p.dx;
+    p.y += p.dy;
+    if(p.x>canvas.width||p.y>canvas.height) {
+      p.x=0; p.y=Math.random()*canvas.height;
+    }
+    ctx.beginPath();
+    ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+    ctx.fill();
   });
-  requestAnimationFrame(anim);
-})();
+  requestAnimationFrame(animate);
+}
+animate();
 </script>
 
 </body>

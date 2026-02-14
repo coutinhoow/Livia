@@ -2,7 +2,7 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<title>Um ano de nós</title>
+<title>Feliz Valentine’s Day ❤️</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Montserrat:wght@300;500&display=swap" rel="stylesheet">
@@ -51,6 +51,7 @@ h1 {
   cursor: pointer;
   background: linear-gradient(135deg, #ff4d6d, #ff8fa3);
   color: white;
+  box-shadow: 0 0 20px rgba(255,77,109,0.5);
 }
 
 /* BLOCOS */
@@ -100,8 +101,9 @@ h1 {
 
 /* CONTADOR */
 #counter {
-  margin-top: 40px;
+  margin-bottom: 40px;
   font-size: 22px;
+  color: #ffb3c1;
 }
 
 /* TEXTO DIGITADO */
@@ -149,13 +151,13 @@ h1 {
 
 <!-- INTRO -->
 <section id="intro">
-  <h1>Um ano de nós</h1>
+  <h1>Feliz Valentine’s Day ❤️<br><small>Um ano de nós</small></h1>
   <button class="button" id="start">Começar</button>
 </section>
 
 <!-- TELA DA MÚSICA -->
 <section id="musicScreen" style="display:none;">
-  <h1>Vamos colocar uma música antes de começar?</h1>
+  <h1>Antes de começar…<br>vamos colocar uma música? 🎶</h1>
   <img src="foto-musica.jpg" style="max-width:70%; border-radius:20px; margin:30px 0;">
   <button class="button" id="playMusic">▶️ Play</button>
 </section>
@@ -199,7 +201,7 @@ h1 {
     <div class="caption">Tem algo escondido aqui… toque ✨</div>
   </div>
 
-  <!-- FOTO SECRETA DO CÉU -->
+  <!-- FOTO SECRETA -->
   <div class="photo" id="segredo" style="display:none;">
     <img src="foto-olhar-secreto.jpg">
     <div class="caption">
@@ -235,50 +237,50 @@ h1 {
     <p>surpresa</p>
   </div>
 
+  <!-- FINAL -->
+  <h1 style="margin-top:150px;">
+    Compartilhar a vida com você é bom demais 💖
+  </h1>
+
 </section>
 
 <script>
-/* CONTROLE DE TELAS */
+/* TELAS */
 const intro = document.getElementById("intro");
 const musicScreen = document.getElementById("musicScreen");
 const content = document.getElementById("content");
 const music = document.getElementById("music");
 
-document.getElementById("start").onclick = () => {
+start.onclick = () => {
   intro.style.display = "none";
   musicScreen.style.display = "flex";
 };
 
-document.getElementById("playMusic").onclick = () => {
+playMusic.onclick = () => {
   music.play();
   musicScreen.style.display = "none";
   content.style.display = "flex";
 };
 
-document.getElementById("pauseMusic").onclick = () => {
+pauseMusic.onclick = () => {
   music.paused ? music.play() : music.pause();
 };
 
-/* ANIMAÇÃO AO APARECER */
-const photos = document.querySelectorAll(".photo");
+/* APARECER AO ROLAR */
 const observer = new IntersectionObserver(entries => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      entry.target.classList.add("show");
-    }
+  entries.forEach(e => {
+    if (e.isIntersecting) e.target.classList.add("show");
   });
 },{ threshold: 0.2 });
 
-photos.forEach(p => observer.observe(p));
+document.querySelectorAll(".photo").forEach(p => observer.observe(p));
 
 /* FOTO SECRETA */
 function revelar() {
-  const segredo = document.getElementById("segredo");
-  segredo.style.display = "block";
-  observer.observe(segredo);
+  const s = document.getElementById("segredo");
+  s.style.display = "block";
+  observer.observe(s);
 }
-
-const olhar = document.getElementById("olhar");
 olhar.addEventListener("click", revelar);
 olhar.addEventListener("touchstart", revelar);
 
@@ -293,60 +295,46 @@ Muito obrigado por tudo meu amor, EU TE AMO.`;
 let i = 0;
 function type() {
   if (i < text.length) {
-    document.getElementById("typed").innerHTML += text[i];
-    i++;
-    setTimeout(type, text[i-1] === "," ? 300 : 60);
+    typed.innerHTML += text[i];
+    setTimeout(type, text[i++] === "," ? 300 : 60);
   }
 }
 setTimeout(type, 1000);
 
 /* CONTADOR */
-const counter = document.getElementById("counter");
 const startDate = new Date("2025-02-01T00:00:00");
-
 setInterval(() => {
-  const now = new Date();
-  const diff = now - startDate;
-  const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+  const diff = new Date() - startDate;
+  const days = Math.floor(diff / 86400000);
   counter.innerText = `Tempo que nos conhecemos: ${days} dias`;
 }, 1000);
 
 /* PARTÍCULAS */
-const canvas = document.getElementById("bg");
-const ctx = canvas.getContext("2d");
-canvas.width = window.innerWidth;
-canvas.height = window.innerHeight;
+const canvas = bg, ctx = canvas.getContext("2d");
+canvas.width = innerWidth; canvas.height = innerHeight;
 
-const particles = Array.from({ length: 80 }, () => ({
-  x: Math.random() * canvas.width,
-  y: Math.random() * canvas.height,
-  r: Math.random() * 2 + 1,
-  dx: Math.random() * 0.4,
-  dy: Math.random() * 0.4
+const particles = Array.from({length:80},()=>({
+  x:Math.random()*canvas.width,
+  y:Math.random()*canvas.height,
+  r:Math.random()*2+1,
+  dx:Math.random()*0.3,
+  dy:Math.random()*0.3
 }));
 
-function animate() {
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
-  ctx.fillStyle = "rgba(255,255,255,0.6)";
-  particles.forEach(p => {
-    p.x += p.dx;
-    p.y += p.dy;
-    if (p.x > canvas.width || p.y > canvas.height) {
-      p.x = 0;
-      p.y = Math.random() * canvas.height;
-    }
-    ctx.beginPath();
-    ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-    ctx.fill();
+function animate(){
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  ctx.fillStyle="rgba(255,105,135,0.6)";
+  particles.forEach(p=>{
+    p.x+=p.dx; p.y+=p.dy;
+    if(p.x>canvas.width||p.y>canvas.height){p.x=0;p.y=Math.random()*canvas.height;}
+    ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);ctx.fill();
   });
   requestAnimationFrame(animate);
 }
 animate();
 
 /* PRESENTE */
-document.getElementById("gift").onclick = () => {
-  window.location.href = "surpresa.html";
-};
+gift.onclick = () => location.href = "surpresa.html";
 </script>
 
 </body>
